@@ -1,12 +1,19 @@
 'use strict';
 // https://github.com/accord-net/framework/blob/development/Sources/Accord.Statistics/Models/Regression/Linear/MultipleLinearRegression.cs
 
-var Matrix = require('../../../math/matrix'),
-    DC = require('../../../math/decompositions');
+var Matrix = require('ml-matrix');
+var DC = Matrix.DC;
 
 function MultipleLinearRegression(inputs, intercept) {
-    if (typeof(intercept) === 'undefined') intercept = false;
-    if (intercept === true) inputs++;
+    if (typeof inputs !== 'number') {
+        throw new TypeError('inputs must be a number');
+    }
+    if (intercept === undefined) {
+        intercept = false;
+    }
+    if (intercept === true) {
+        inputs++;
+    }
     this.coefficients = new Array(inputs);
     this.addIntercept = intercept;
 }
@@ -19,42 +26,60 @@ MultipleLinearRegression.prototype = {
         return this.addIntercept;
     },
     regress: function (inputs, outputs, robust) {
-        if (inputs.rows !== outputs.length) throw "Number of input and output samples does not match.";
-        if (typeof(robust) === 'undefined') robust = true;
+        if (!Matrix.isMatrix(inputs)) {
+            inputs = new Matrix(inputs);
+        }
+        if (!Array.isArray(outputs)) {
+            throw new TypeError('outputs must be an array');
+        }
+        if (inputs.rows !== outputs.length) {
+            throw new RangeError('number of input and output samples' +
+            'does not match');
+        }
+        if (robust === undefined) {
+            robust = true;
+        }
 
         var parameters = this.inputs;
         var rows = inputs.rows;
         var cols = inputs.columns;
+        if (parameters !== cols) {
+            throw new RangeError('input vectors should have length ' +
+            parameters + ' but they have ' + cols);
+        }
 
-        if (parameters !== cols)
-            throw "Input vectors should have length " + parameters + " but they have " + cols;
+        var solver, designMatrix, i;
 
-        var solver, designMatrix;
-
-        if (!this.addIntercept)
+        if (!this.addIntercept) {
             designMatrix = inputs.clone();
-        else {
+        } else {
             designMatrix = Matrix.empty(rows, cols + 1);
-            for (var i = 0; i < rows; i++) {
-                for (var j = 0; j < cols; j++)
+            for (i = 0; i < rows; i++) {
+                for (var j = 0; j < cols; j++) {
                     designMatrix[i][j] = inputs[i][j];
+                }
                 designMatrix[i][cols] = 1;
             }
         }
 
         if (robust || cols >= rows) {
-            solver = new DC.SingularValueDecomposition(designMatrix, {computeLeftSingularVectors: true,
-                computeRightSingularVectors: true,
-                autoTranspose: true});
+            solver = new DC.SingularValueDecomposition(designMatrix,
+                {
+                    computeLeftSingularVectors: true,
+                    computeRightSingularVectors: true,
+                    autoTranspose: true
+                });
         }
         else {
             solver = new DC.QrDecomposition(designMatrix);
         }
 
-        this.coefficients = solver.solve(Matrix.columnVector(outputs)).to1DArray();
+        this.coefficients = solver
+            .solve(Matrix.columnVector(outputs))
+            .to1DArray();
 
         var error = 0, e;
-        for (var i = 0; i < outputs.length; i++) {
+        for (i = 0; i < outputs.length; i++) {
             e = outputs[i] - this.compute(inputs[i]);
             error += e * e;
         }
@@ -62,19 +87,22 @@ MultipleLinearRegression.prototype = {
         return error;
     },
     coefficientOfDetermination: function (inputs, outputs, adjust) {
-        if (typeof(adjust) === 'undefined') adjust = false;
+        if (adjust === undefined) {
+            adjust = false;
+        }
         var n = inputs.rows;
         var p = this.inputs;
         var SSe = 0;
         var SSt = 0;
         var avg = 0;
-        var d;
+        var d, i;
 
-        for (var i = 0; i < outputs.length; i++)
+        for (i = 0; i < outputs.length; i++) {
             avg += outputs[i];
+        }
         avg /= n;
 
-        for (var i = 0; i < outputs.length; i++) {
+        for (i = 0; i < outputs.length; i++) {
             d = outputs[i] - this.compute(inputs[i]);
             SSe += d * d;
 
@@ -84,61 +112,73 @@ MultipleLinearRegression.prototype = {
 
         var r2 = (SSt !== 0) ? 1 - (SSe / SSt) : 1;
 
-        if (!adjust)
+        if (!adjust) {
             return r2;
-        else {
-            if (r2 === 1)
+        } else {
+            if (r2 === 1) {
                 return 1;
-
-            if (n - p === 1)
+            } else if (n - p === 1) {
                 return NaN;
-            else
+            } else {
                 return 1 - (1 - r2) * ((n - 1) / (n - p - 1));
+            }
         }
     },
     compute: function (input) {
-        if (input instanceof Matrix)
+        if (Matrix.isMatrix(input)) {
             return computeMatrix(this, input);
-        if (input.length !== this.inputs)
-            throw "Input vectors should have length " + this.inputs + ".";
+        }
+        if (!Array.isArray(input)) {
+            throw new TypeError('input must be an array or a matrix');
+        }
+        if (input.length !== this.inputs) {
+            throw new RangeError('input vector should have length ' + this.inputs);
+        }
         var output = 0;
-        for (var i = 0, ii = input.length; i < ii; i++)
+        for (var i = 0; i < input.length; i++) {
             output += this.coefficients[i] * input[i];
-
-        if (this.addIntercept)
+        }
+        if (this.addIntercept) {
             output += this.coefficients[input.length];
-
+        }
         return output;
     },
     toString: function (decimals) {
-        var dec = (typeof decimals !== 'undefined');
+        var dec = true;
+        if (decimals === undefined) {
+            dec = false;
+        }
         var coeff = this.coefficients;
-        var str = "y(";
+        var str = 'y(';
         var inputs = (this.addIntercept) ? coeff.length - 1 : coeff.length;
 
-        for (var i = 0; i < inputs; i++) {
-            str += "x" + i;
-            if (i < inputs - 1)
-                str += ", ";
+        for (i = 0; i < inputs; i++) {
+            str += 'x' + i;
+            if (i < inputs - 1) {
+                str += ', ';
+            }
         }
 
-        str += ") = ";
+        str += ') = ';
 
-        for (var i = 0; i < inputs; i++) {
-            if (dec)
-                str += coeff[i].toFixed(decimals) + "*x" + i;
-            else
-                str += parseFloat(coeff[i].toFixed(10)) + "*x" + i;
-
-            if (i < inputs - 1)
-                str += " + ";
+        var i;
+        for (i = 0; i < inputs; i++) {
+            if (dec) {
+                str += coeff[i].toFixed(decimals) + '*x' + i;
+            } else {
+                str += parseFloat(coeff[i].toFixed(10)) + '*x' + i;
+            }
+            if (i < inputs - 1) {
+                str += ' + ';
+            }
         }
 
         if (this.addIntercept) {
-            if (dec)
-                str += " + " + coeff[inputs].toFixed(decimals);
-            else
-                str += " + " + parseFloat(coeff[inputs].toFixed(10));
+            if (dec) {
+                str += ' + ' + coeff[inputs].toFixed(decimals);
+            } else {
+                str += ' + ' + parseFloat(coeff[inputs].toFixed(10));
+            }
         }
         return str;
     }
@@ -147,10 +187,9 @@ MultipleLinearRegression.prototype = {
 function computeMatrix(mlr, input) {
     var l = input.rows;
     var output = new Array(l);
-
-    for (var i = 0; i < l; i++)
+    for (var i = 0; i < l; i++) {
         output[i] = mlr.compute(input[i]);
-
+    }
     return output;
 }
 
