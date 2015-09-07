@@ -113,8 +113,11 @@ function polynomialRegression(X, Y, M) {
  * @return [A,B]
  * */
 function powerRegression(X,Y){
-	//TODO
-	return [0,0];
+    var result = this.linearFit(math.log(X), math.log(Y));
+    return {
+        A : result.A,
+        C : math.exp(result.B)
+    };
 }
 
 module.exports.potentialRegression = potentialRegression;
