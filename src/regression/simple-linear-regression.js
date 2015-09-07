@@ -1,64 +1,42 @@
 'use strict';
-// https://github.com/accord-net/framework/blob/development/Sources/Accord.Statistics/Models/Regression/Linear/SimpleLinearRegression.cs
 
-var MLR = require('./multiple-linear-regression');
-var Matrix = require('ml-matrix');
+function SimpleLinearRegression(x, y) {
+    if (!(this instanceof SimpleLinearRegression)) {
+        return new SimpleLinearRegression(x, y);
+    }
 
-function SimpleLinearRegression(intercept) {
-    this.regression = new MLR(2, intercept);
+    var n = x.length;
+    if (n !== y.length) {
+        throw new RangeError('input and output array have a different length');
+    }
+
+    var xSum = 0;
+    var ySum = 0;
+
+    var xSquared = 0;
+    var ySquared = 0;
+    var xY = 0;
+
+    for (var i = 0; i < n; i++) {
+        xSum += x[i];
+        ySum += y[i];
+        xSquared += x[i] * x[i];
+        ySquared += y[i] * y[i];
+        xY += x[i] * y[i];
+    }
+
+    var numerator = (n * xY - xSum * ySum);
+
+    this.slope = numerator / (n * xSquared - xSum * xSum);
+    this.intercept = (1 / n) * ySum - this.slope * (1 / n) * xSum;
+    this.coefficients = [this.intercept, this.slope];
+
+    this.r = numerator / Math.sqrt((n * xSquared - xSum * xSum) * (n * ySquared - ySum * ySum));
+    this.coefficientOfDetermination = this.r2 = this.r * this.r;
 }
 
-SimpleLinearRegression.prototype = {
-    get slope() {
-        return this.regression.coefficients[1];
-    },
-    get intercept() {
-        return this.regression.coefficients[0];
-    },
-    regress: function (inputs, outputs) {
-        if (!Array.isArray(inputs) || !Array.isArray(outputs)) {
-            throw new TypeError('Regression expects two arrays');
-        }
-        if (inputs.length !== outputs.length) {
-            throw new RangeError('Number of input and output samples does not match');
-        }
-        var X = new Array(inputs.length);
-        for (var i = 0; i < inputs.length; i++) {
-            X[i] = [1, inputs[i]];
-        }
-        return this.regression.regress(new Matrix(X), outputs);
-    },
-    compute: function (input) {
-        if (Array.isArray(input)) {
-            return computeArray(this, input);
-        }
-        return this.slope * input + this.intercept;
-    },
-    coefficientOfDetermination: function (inputs, outputs, adjust) {
-        if (adjust === undefined) {
-            adjust = false;
-        }
-        var X = new Array(inputs.length);
-        for (var i = 0; i < inputs.length; i++) {
-            X[i] = [1, inputs[i]];
-        }
-        return this.regression.coefficientOfDetermination(new Matrix(X), outputs, adjust);
-    },
-    toString: function (decimals) {
-        if (decimals === undefined) {
-            return "y(x) = " + parseFloat(this.slope.toFixed(10)) + "x + " + parseFloat(this.intercept.toFixed(10));
-        } else {
-            return "y(x) = " + this.slope.toFixed(decimals) + "x + " + this.intercept.toFixed(decimals);
-        }
-    }
+SimpleLinearRegression.prototype.compute = function (input) {
+    return this.slope * input + this.intercept;
 };
-
-function computeArray(slr, input) {
-    var output = new Array(input.length);
-    for (var i = 0; i < input.length; i++) {
-        output[i] = slr.compute(input[i]);
-    }
-    return output;
-}
 
 module.exports = SimpleLinearRegression;

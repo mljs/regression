@@ -29,12 +29,8 @@
   },
   "homepage": "https://github.com/mljs/regression",
   "devDependencies": {
-    "mocha": "latest",
-    "mocha-better-spec-reporter": "latest",
-    "should": "latest",
-    "should-approximately-deep": "latest"
-  },
-  "dependencies": {
-    "ml-matrix": "0.0.1"
+    "mocha": "^2.3.1",
+    "mocha-better-spec-reporter": "^2.1.1",
+    "should": "^7.1.0"
   }
 }
