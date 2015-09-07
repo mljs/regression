@@ -1,6 +1,6 @@
 {
   "name": "ml-regression",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "Regression algorithms",
   "main": "src/index.js",
   "directories": {
