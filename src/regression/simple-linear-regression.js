@@ -35,8 +35,12 @@ function SimpleLinearRegression(x, y) {
     this.coefficientOfDetermination = this.r2 = this.r * this.r;
 }
 
-SimpleLinearRegression.prototype.compute = function (input) {
+SimpleLinearRegression.prototype.compute = function compute(input) {
     return this.slope * input + this.intercept;
+};
+
+SimpleLinearRegression.prototype.computeX = function computeX(input) {
+    return (input - this.intercept) / this.slope;
 };
 
 module.exports = SimpleLinearRegression;
