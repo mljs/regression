@@ -64,4 +64,19 @@ describe('Simple linear regression', function () {
         regression.toString(1).should.equal('y = 2');
         regression.toString(5).should.equal('y = 2.0000');
     });
+    it('negative intercept and slope', function () {
+        var inputs = [-1, 0, 1];
+        var outputs = [-2, -1, 0];
+
+        var regression = SLR(inputs, outputs);
+
+        regression.toString().should.equal('y = x - 1');
+    });
+    it('different size on input and output', function () {
+        var inputs = [0, 1, 2];
+        var outputs = [0, 1];
+        (function () {
+            SLR(inputs, outputs);
+        }).should.throw(RangeError, {message: 'input and output array have a different length'})
+    });
 });

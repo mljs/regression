@@ -48,7 +48,8 @@ SimpleLinearRegression.prototype.computeX = function computeX(input) {
 SimpleLinearRegression.prototype.toString = function toString(precision) {
     var result = 'y = ';
     if (this.slope) {
-        result += maybeToPrecision(this.slope, precision) + 'x';
+        var xFactor = maybeToPrecision(this.slope, precision);
+        result += (xFactor == 1 ? '' : xFactor) + 'x';
         if (this.intercept) {
             var absIntercept = Math.abs(this.intercept);
             var operator = absIntercept === this.intercept ? '+' : '-';
