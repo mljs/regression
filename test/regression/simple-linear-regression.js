@@ -19,6 +19,8 @@ describe('Simple linear regression', function () {
         var y = regression.compute(85);
         regression.computeX(y).should.equal(85);
         y.should.be.approximately(28.088235294117649, 1e-10);
+
+        regression.toString(3).should.equal('y = -0.265x + 50.6');
     });
     it('SLR2', function () {
         // example from https://en.wikipedia.org/wiki/Simple_linear_regression#Numerical_example
@@ -49,5 +51,17 @@ describe('Simple linear regression', function () {
         regression.computeX(5).should.equal(2.5);
         regression.computeX(9).should.equal(0.5);
         regression.computeX(-12).should.equal(11);
+
+        regression.toString(3).should.equal('y = -2.00x + 10.0');
+    });
+    it('SLR constant', function () {
+        var inputs = [0, 1, 2, 3];
+        var outputs = [2, 2, 2, 2];
+
+        var regression = SLR(inputs, outputs);
+
+        regression.toString().should.equal('y = 2');
+        regression.toString(1).should.equal('y = 2');
+        regression.toString(5).should.equal('y = 2.0000');
     });
 });

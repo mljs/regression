@@ -1,5 +1,7 @@
 'use strict';
 
+var maybeToPrecision = require('./util').maybeToPrecision;
+
 function SimpleLinearRegression(x, y) {
     if (!(this instanceof SimpleLinearRegression)) {
         return new SimpleLinearRegression(x, y);
@@ -41,6 +43,21 @@ SimpleLinearRegression.prototype.compute = function compute(input) {
 
 SimpleLinearRegression.prototype.computeX = function computeX(input) {
     return (input - this.intercept) / this.slope;
+};
+
+SimpleLinearRegression.prototype.toString = function toString(precision) {
+    var result = 'y = ';
+    if (this.slope) {
+        result += maybeToPrecision(this.slope, precision) + 'x';
+        if (this.intercept) {
+            var absIntercept = Math.abs(this.intercept);
+            var operator = absIntercept === this.intercept ? '+' : '-';
+            result += ' ' + operator + ' ' + maybeToPrecision(absIntercept, precision);
+        }
+    } else {
+        result += maybeToPrecision(this.intercept, precision);
+    }
+    return result;
 };
 
 module.exports = SimpleLinearRegression;
