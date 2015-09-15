@@ -30,10 +30,15 @@
     "url": "https://github.com/mljs/regression/issues"
   },
   "homepage": "https://github.com/mljs/regression",
+
   "devDependencies": {
     "istanbul": "^0.3.19",
     "mocha": "^2.3.1",
     "mocha-better-spec-reporter": "^2.1.1",
     "should": "^7.1.0"
+  },
+
+  "dependencies": {
+    "ml-matrix":"0.1.0"
   }
 }
