@@ -17,7 +17,10 @@ describe('Simple linear regression', function () {
         regression.intercept.should.be.approximately(50.588235, 1e-5);
 
         var y = regression.compute(85);
+        regression.computeX(y).should.equal(85);
         y.should.be.approximately(28.088235294117649, 1e-10);
+
+        regression.toString(3).should.equal('y = -0.265x + 50.6');
     });
     it('SLR2', function () {
         // example from https://en.wikipedia.org/wiki/Simple_linear_regression#Numerical_example
@@ -32,5 +35,48 @@ describe('Simple linear regression', function () {
         regression.intercept.should.be.approximately(-39.062, 1e-3);
         regression.r.should.be.approximately(0.9945, 1e-4);
         regression.r2.should.equal(regression.r * regression.r);
+    });
+    it('SLR3', function () {
+        var inputs = [0, 1, 2, 3, 4, 5];
+        var outputs = [10, 8, 6, 4, 2, 0];
+
+        var regression = SLR(inputs, outputs);
+
+        regression.r2.should.equal(1);
+        regression.slope.should.equal(-2);
+        regression.intercept.should.equal(10);
+        regression.compute(6).should.equal(-2);
+        regression.compute(-1).should.equal(12);
+        regression.compute(2.5).should.equal(5);
+        regression.computeX(5).should.equal(2.5);
+        regression.computeX(9).should.equal(0.5);
+        regression.computeX(-12).should.equal(11);
+
+        regression.toString(3).should.equal('y = -2.00x + 10.0');
+    });
+    it('SLR constant', function () {
+        var inputs = [0, 1, 2, 3];
+        var outputs = [2, 2, 2, 2];
+
+        var regression = SLR(inputs, outputs);
+
+        regression.toString().should.equal('y = 2');
+        regression.toString(1).should.equal('y = 2');
+        regression.toString(5).should.equal('y = 2.0000');
+    });
+    it('negative intercept and slope', function () {
+        var inputs = [-1, 0, 1];
+        var outputs = [-2, -1, 0];
+
+        var regression = SLR(inputs, outputs);
+
+        regression.toString().should.equal('y = x - 1');
+    });
+    it('different size on input and output', function () {
+        var inputs = [0, 1, 2];
+        var outputs = [0, 1];
+        (function () {
+            SLR(inputs, outputs);
+        }).should.throw(RangeError, {message: 'input and output array have a different length'})
     });
 });
