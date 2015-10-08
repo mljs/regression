@@ -5,7 +5,7 @@ var Matrix = require("ml-matrix");
 var stats = require("ml-stat");
 
 
-//Implements the Kernel ridge regression algorith.
+//Implements the Kernel ridge regression algoritmh.
 //http://www.ics.uci.edu/~welling/classnotes/papers_class/Kernel-Ridge.pdf
 function learn(X,Y,options){
 
@@ -41,7 +41,7 @@ function kernel(type, params, A, B){
             return gaussianKernel(A,B,params.w);
             break;
         case "polynomial":
-            return polynomialKernel(A,B,params.degree)
+            return polynomialKernel(A,B,params.degree||1,params.bias||1);
             break;
         case "fisher":
             break;
@@ -66,12 +66,12 @@ function gaussianKernel(A, B, w){
     return K;
 }
 //The polinomial kernel
-function polynomialKernel(A, B, n){
+function polynomialKernel(A, B, n, vias){
     var d = A.mmul(B.transpose());
     var i, j;
     for(i=0;i< d.rows;i++){
         for(j=0;j< d.columns;j++){
-            d[i][j]=Math.pow(d[i][j],n);
+            d[i][j]=Math.pow(vias+d[i][j],n);
         }
     }
     return d;

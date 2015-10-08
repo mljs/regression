@@ -16,7 +16,7 @@ for(i=0;i<nSamples;i++){
     Ys[i][0] = Xs[i][0]*Xs[i][0]+2*Xs[i][0]*Xs[i][1]+Xs[i][1]*Xs[i][1];
 }
 
-var model = ridgeRegression.learn(Xs,Ys,{"kernelType":"polynomial","kernelParams":{"degree":2}});
+var model = ridgeRegression.learn(Xs,Ys,{"kernelType":"polynomial","kernelParams":{"degree":2,"bias":1}});
 
 //console.log(model);
 var X = new Matrix(nSteps*nSteps,2);
