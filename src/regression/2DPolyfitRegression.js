@@ -6,6 +6,13 @@ var SVD = Matrix.DC.SingularValueDecomposition;
 
 module.exports = PolynomialFitRegression2D;
 
+/**
+ * Constructor for the 2D polynomial fitting
+ *
+ * @param reload - for load purposes
+ * @param model - for load purposes
+ * @constructor
+ */
 function PolynomialFitRegression2D(reload, model) {
     if (reload) {
         this.coefficients = Matrix.columnVector(model.coefficients);
@@ -14,9 +21,17 @@ function PolynomialFitRegression2D(reload, model) {
         this.coefficients = [];
         this.order = 2;
     }
-
 }
 
+/**
+ * Function that fits the model given the data(X) and predictions(y).
+ * The third argument is an object with the following options:
+ * * order: order of the polynomial to fit.
+ *
+ * @param X - A matrix with n rows and 2 columns.
+ * @param y - A vector of the prediction values.
+ * @param options
+ */
 PolynomialFitRegression2D.prototype.train = function (X, y, options) {
     if(!Matrix.isMatrix(X)) X = new Matrix(X);
     if(!Matrix.isMatrix(y)) y = Matrix.columnVector(y);
@@ -92,6 +107,13 @@ PolynomialFitRegression2D.prototype.train = function (X, y, options) {
     }
 };
 
+/**
+ * Function that returns a prediction for the given dataset(X)
+ *
+ * @param X - dataset
+ * @returns {Matrix} - prediction for the dataset.
+ */
+
 PolynomialFitRegression2D.prototype.predict = function (X) {
     if(!Matrix.isMatrix(X)) X = new Matrix(X);
 
@@ -115,6 +137,12 @@ PolynomialFitRegression2D.prototype.predict = function (X) {
     return y;
 };
 
+/**
+ * Function that exports the current model.
+ *
+ * @returns {{modelName: string, order: *, coefficients: *}} - JSON object with the model.
+ */
+
 PolynomialFitRegression2D.prototype.export = function () {
     return {
         modelName: "Polyfit2D",
@@ -123,6 +151,13 @@ PolynomialFitRegression2D.prototype.export = function () {
     };
 };
 
+
+/**
+ * Function that load the given model and returns a PolynomialFitRegression2D object.
+ *
+ * @param model
+ * @returns {PolynomialFitRegression2D}
+ */
 PolynomialFitRegression2D.load = function (model) {
     if(model.modelName !== "Polyfit2D")
         throw new RangeError("The current model in invalid!");
@@ -130,6 +165,13 @@ PolynomialFitRegression2D.load = function (model) {
     return new PolynomialFitRegression2D(true, model);
 };
 
+/**
+ * Function that given a column vector return this: vector^power
+ *
+ * @param x - Column vector.
+ * @param power - Pow number.
+ * @returns {Suite|Matrix}
+ */
 function powColVector(x, power) {
     var result = x.clone();
     for(var i = 0; i < x.rows; ++i) {
@@ -138,6 +180,13 @@ function powColVector(x, power) {
     return result;
 }
 
+/**
+ * Function to use in the apply method to get the absolute value
+ * of each element of the matrix
+ *
+ * @param i - current row.
+ * @param j - current column.
+ */
 function abs(i, j) {
     this[i][j] = Math.abs(this[i][j]);
 }
