@@ -3,7 +3,7 @@
  */
 
 var Matrix = require("ml-matrix");
-var ridgeRegression = require("../../src/regression/ridge_regression");
+var ridgeRegression = require("../..").KernelRidgeRegression;
 
 var nSamples = 10;
 var nVars = 2;
