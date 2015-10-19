@@ -11,7 +11,7 @@ function PolynomialFitRegression2D() {
     this.order = 2;
 }
 
-PolynomialFitRegression2D.prototype.fit = function (X, y, options) {
+PolynomialFitRegression2D.prototype.train = function (X, y, options) {
     if(!Matrix.isMatrix(X)) X = new Matrix(X);
     if(!Matrix.isMatrix(y)) y = Matrix.columnVector(y);
     else y = y.transpose();
@@ -86,7 +86,28 @@ PolynomialFitRegression2D.prototype.fit = function (X, y, options) {
     }
 };
 
+PolynomialFitRegression2D.prototype.predict = function (X) {
+    if(!Matrix.isMatrix(X)) X = new Matrix(X);
 
+    var rows = X.rows;
+
+    var x1 = X.getColumnVector(0);
+    var x2 = X.getColumnVector(1);
+
+    var y = Matrix.zeros(rows, 1);
+    var column = 0;
+
+    for(var i = 0; i <= this.order; ++i) {
+        for(var j = 0; j <= this.order - i; ++j) {
+            var value = powColVector(x1, i).mulColumnVector(powColVector(x2, j));
+            value.mulColumn(0, this.coefficients[column][0]);
+            y.addColumnVector(value);
+            column++;
+        }
+    }
+
+    return y;
+};
 
 function powColVector(x, power) {
     var result = x.clone();
