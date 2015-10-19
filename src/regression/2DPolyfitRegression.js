@@ -6,9 +6,15 @@ var SVD = Matrix.DC.SingularValueDecomposition;
 
 module.exports = PolynomialFitRegression2D;
 
-function PolynomialFitRegression2D() {
-    this.coefficients = [];
-    this.order = 2;
+function PolynomialFitRegression2D(reload, model) {
+    if (reload) {
+        this.coefficients = Matrix.columnVector(model.coefficients);
+        this.order = model.order;
+    } else {
+        this.coefficients = [];
+        this.order = 2;
+    }
+
 }
 
 PolynomialFitRegression2D.prototype.train = function (X, y, options) {
@@ -107,6 +113,21 @@ PolynomialFitRegression2D.prototype.predict = function (X) {
     }
 
     return y;
+};
+
+PolynomialFitRegression2D.prototype.export = function () {
+    return {
+        modelName: "Polyfit2D",
+        order: this.order,
+        coefficients: this.coefficients
+    };
+};
+
+PolynomialFitRegression2D.load = function (model) {
+    if(model.modelName !== "Polyfit2D")
+        throw new RangeError("The current model in invalid!");
+
+    return new PolynomialFitRegression2D(true, model);
 };
 
 function powColVector(x, power) {
