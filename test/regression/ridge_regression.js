@@ -1,6 +1,7 @@
 /**
  * Created by acastillo on 10/6/15.
  */
+'use strict';
 
 var Matrix = require("ml-matrix");
 var ridgeRegression = require("../..").KernelRidgeRegression;
@@ -16,45 +17,31 @@ for(i=0;i<nSamples;i++){
     Ys[i][0] = Xs[i][0]*Xs[i][0]+2*Xs[i][0]*Xs[i][1]+Xs[i][1]*Xs[i][1];
 }
 
-var model = ridgeRegression.learn(Xs,Ys,{"kernelType":"polynomial","kernelParams":{"degree":2,"bias":1}});
+/*var model = ridgeRegression.learn(Xs,Ys,{"kernelType":"gaussian","lambda":0.001,"kernelParams":{"w":0.1}});
+console.log(model);
+var Y = ridgeRegression.predict(Xs,model);
+for(i=0;i< Y.length;i++){
+    console.log(Y[i][0]+" "+Ys[i][0]);
+    //Y[i][0].should.be.approximately(Ys[i][0], 1e-1);
+}*/
 
-//console.log(model);
-var X = new Matrix(nSteps*nSteps,2);
-var x = new Matrix(nSteps,nSteps);
-var y = new Matrix(nSteps,nSteps);
-var z = new Matrix(nSteps,nSteps);
-var dx = 1/(nSteps-1);
+describe('Kernel ridge regression', function () {
+    it('Polynomial kernel should overfit the pattern', function () {
+        var model = ridgeRegression.learn(Xs,Ys,{"kernelType":"polynomial","lambda":0.0001,"kernelParams":{"degree":2,"bias":1}});
+        var Y = ridgeRegression.predict(Xs,model);
 
-for(i=0;i<nSteps;i++){
-    for(j=0;j<nSteps;j++){
-        X[i+j*nSteps][0]=-0.5+i*dx;
-        X[i+j*nSteps][1]=-0.5+j*dx;
-
-        x[i][j]=X[i+j*nSteps][0];
-        y[i][j]=X[i+j*nSteps][1];
-    }
-}
-
-var Y = ridgeRegression.predict(X,model);
-var xstring = "",ystring="",zstring="";
-
-for(i=0;i<nSteps;i++){
-    for(j=0;j<nSteps;j++){
-        z[i][j]=Y[i+j*nSteps][0];
-    }
-    for(j=0;j<nSteps-1;j++){
-        xstring+=x[i][j]+",";
-        ystring+=y[i][j]+",";
-        zstring+=z[i][j]+",";
-    }
-    xstring+=x[i][j]+";";
-    ystring+=y[i][j]+";";
-    zstring+=z[i][j]+";";
-}
-console.log("X=["+xstring+"];");
-console.log("Y=["+ystring+"];");
-console.log("Z=["+zstring+"];");
-console.log("contour(X,Y,Z,20);");
+        for(i=0;i< Y.length;i++){
+            Y[i][0].should.be.approximately(Ys[i][0], 5e-3);
+        }
+    });
+    it('Gaussian kernel should overfit the pattern', function () {
+        var model = ridgeRegression.learn(Xs,Ys,{"kernelType":"gaussian","lambda":0.0001,"kernelParams":{"w":0.1}});
+        var Y = ridgeRegression.predict(Xs,model);
+        for(i=0;i< Y.length;i++){
+            Y[i][0].should.be.approximately(Ys[i][0], 5e-3);
+        }
+    });
+});
 
 
 

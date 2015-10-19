@@ -20,7 +20,6 @@ function learn(X,Y,options){
     var n = Xi.rows;
 
     K.add(Matrix.eye(n,n).mulS(lambda));
-    //console.log(K);
 
     var alpha = K.solve(Yi);
     //We return all that we need to predict new values
@@ -47,18 +46,16 @@ function kernel(type, params, A, B){
             break;
     }
 }
-//The gaussian kernel implementation. It has an error for predicting...
+//The gaussian kernel implementation.
 function gaussianKernel(A, B, w){
     //TODO Implements this kernel correctly
-    var a = A.clone();
-    var d = a.sub(B);//pairwiseSquaredDistances(X.transpose(), Z.transpose());
-    var K = new Matrix(A.rows, A.rows);
+    var K = new Matrix(A.rows, B.rows);
     var i, j, k, diff;
     for(i=0;i< A.rows;i++){
-        for(j=0;j< A.rows;j++){
+        for(j=0;j< B.rows;j++){
             diff = 0;
             for(k=0;k< A.columns;k++){
-                diff+=d[i][j]*d[i][j];
+                diff+=(A[i][k]-B[j][k])*(A[i][k]-B[j][k]);
             }
             K[i][j]=Math.exp(-diff/w);
         }
@@ -66,12 +63,12 @@ function gaussianKernel(A, B, w){
     return K;
 }
 //The polinomial kernel
-function polynomialKernel(A, B, n, vias){
+function polynomialKernel(A, B, n, bias){
     var d = A.mmul(B.transpose());
     var i, j;
     for(i=0;i< d.rows;i++){
         for(j=0;j< d.columns;j++){
-            d[i][j]=Math.pow(vias+d[i][j],n);
+            d[i][j]=Math.pow(bias+d[i][j],n);
         }
     }
     return d;
