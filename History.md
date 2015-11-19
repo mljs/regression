@@ -1,4 +1,11 @@
-1.0.0 / HEAD
+1.1.0 / 2015-11-19
+==================
+
+* Add Kernel Ridge Regression
+* SLR: add toString method
+* SLR: add computeX method
+
+1.0.0 / 2015-09-07
 ==================
 
 * first release
