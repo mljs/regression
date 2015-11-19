@@ -37,7 +37,7 @@
     "should": "^7.1.0"
   },
   "dependencies": {
-    "ml-matrix": "^1.0.0",
-    "ml-stat": "^1.1.0"
+    "ml-kernel": "^2.0.0",
+    "ml-matrix": "^1.0.2"
   }
 }
