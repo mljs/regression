@@ -36,11 +36,7 @@ class KernelRidgeRegression {
     }
 
     predict(newInputs) {
-        console.log('new inputs', newInputs);
-        console.log('alpha', this.alpha);
-        var kernelized = this.kernel.compute(newInputs);
-        console.log('kernelized', kernelized);
-        return this.kernel.compute(newInputs).mmul(this.alpha);
+        return this.kernel.compute(newInputs, this.inputs).mmul(this.alpha);
     }
 
     toJSON() {

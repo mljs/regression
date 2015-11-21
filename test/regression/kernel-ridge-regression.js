@@ -14,9 +14,9 @@ for (var i = 0; i < nSamples; i++) {
 }
 
 describe('Kernel ridge regression', function () {
-    it.only('simple test with one data point', function () {
+    it('constant outputs', function () {
         var model = new KernelRidgeRegression([[0, 0], [1,1]], [[0], [0]]);
-        console.log(model.predict([[1,1], [2,5], [4,7]]));
+        Array.from(model.predict([[1,1], [2,5], [4,7]])).should.eql([[0], [0], [0]]);
     });
     it.skip('Polynomial kernel should overfit the pattern', function () {
         var model = new KernelRidgeRegression(Xs, Ys, {
