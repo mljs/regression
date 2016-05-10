@@ -1,5 +1,6 @@
-var Math = require("ml-matrix");
-var math = Math.algebra;
+'use strict';
+
+var matrix = require("ml-matrix");
 
 /*
  * Function that calculate the linear fit in the form f(x) = Ax + B and
@@ -10,17 +11,25 @@ var math = Math.algebra;
  * @return {Object} coefficients - Returns the coefficients of the function A and B.
  *
  * */
-function linearRegression(X, Y) {
-	var x2 = math.sum(math.dotPow(X, 2));
-	var x = math.sum(X);
-	var y = math.sum(Y);
-	var xy = math.sum(math.dotMultiply(X, Y));
-	var n = math.subset(math.size(X), math.index(0));
 
-	var A = math.matrix([[x2, x], [x, n]]);
-	var B = math.matrix([[xy], [y]]);
+function linearRegression(Xi, Yi) {
+	var X = Xi;
+	var Y = Yi;
+	if(matrix.isMatrix(X))
+		X = new matrix(X);
+	if(matrix.isMatrix(Y))
+		Y = new matrix(Y);
 
-	var result = math.solve(A, B);
+	var x2 = X.mmul(X.transpose()).sum();
+	var x = X.sum();
+	var y = Y.sum();
+	var xy = X.mmul(Y.transpose()).sum();
+	var n = X.rows;
+
+	var A = new matrix([[x2, x], [x, n]]);
+	var B = new matrix([[xy], [y]]);
+
+	var result = matrix.solve(A, B);
 
 	return {
 		A : result[0][0],
@@ -59,7 +68,7 @@ function potentialRegression(X, Y, M) {
  *
  * */
 function expRegression(X, Y) {
-	var result = this.linearFit(X, math.log(Y));
+	var result = linearRegression(X, math.log(Y));
 	return {
 		A : result.A,
 		C : math.exp(result.B)
@@ -113,8 +122,12 @@ function polynomialRegression(X, Y, M) {
  * @return [A,B]
  * */
 function powerRegression(X,Y){
-	//TODO
-	return [0,0];
+	var result = linearRegression(matrix.log([X]), matrix.log([Y]));
+	console.log(result);
+	return {
+		A : Math.exp(result.A),
+		B : Math.exp(result.B)
+	};
 }
 
 module.exports.potentialRegression = potentialRegression;

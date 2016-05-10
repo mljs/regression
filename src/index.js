@@ -1,6 +1,7 @@
 'use strict';
 
 exports.SimpleLinearRegression = exports.SLR = require('./regression/simple-linear-regression');
+exports.NonLinearRegression = exports.NLR = require('./regression/non-linear-regression');
 exports.KernelRidgeRegression = exports.KRR = require('./regression/kernel-ridge-regression');
 //exports.MultipleLinearRegression = exports.MLR = require('./regression/multiple-linear-regression');
 //exports.MultivariateLinearRegression = exports.MVLR = require('./regression/multivariate-linear-regression');
