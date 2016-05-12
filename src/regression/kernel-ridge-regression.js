@@ -3,22 +3,30 @@
 const Matrix = require('ml-matrix');
 const Kernel = require('ml-kernel');
 
+const BaseRegression = require('./base-regression');
+
 const defaultOptions = {
     lambda: 0.1,
     kernelType: 'gaussian',
-    kernelOptions: {}
+    kernelOptions: {},
+    computeCoefficient:false
 };
 
 // Implements the Kernel ridge regression algorithm.
 // http://www.ics.uci.edu/~welling/classnotes/papers_class/Kernel-Ridge.pdf
-class KernelRidgeRegression {
+class KernelRidgeRegression extends BaseRegression {
     constructor(inputs, outputs, options) {
+        super();
         if (inputs === true) { // reloading model
             this.alpha = outputs.alpha;
             this.inputs = outputs.inputs;
             this.kernelType = outputs.kernelType;
             this.kernelOptions = outputs.kernelOptions;
             this.kernel = new Kernel(outputs.kernelType, outputs.kernelOptions);
+            if(outputs.r){
+                this.r = outputs.r;
+                this.r2 = outputs.r2;
+            }
         } else {
             options = Object.assign({}, defaultOptions, options);
 
@@ -32,11 +40,16 @@ class KernelRidgeRegression {
             this.kernelType = options.kernelType;
             this.kernelOptions = options.kernelOptions;
             this.kernel = kernelFunction;
+
+            if(options.computeCoefficient){
+                this.r = this.rCoefficient(inputs, outputs);
+                this.r2 = this.r*this.r;
+            }
         }
     }
 
-    predict(newInputs) {
-        return this.kernel.compute(newInputs, this.inputs).mmul(this.alpha);
+    _compute(newInputs) {
+        return this.kernel.compute([newInputs], this.inputs).mmul(this.alpha)[0];
     }
 
     toJSON() {
