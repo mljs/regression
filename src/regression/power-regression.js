@@ -47,7 +47,7 @@ class PowerRegression extends BaseRegression{
         }
     }
 
-    _compute(newInputs) {
+    _predict(newInputs) {
         return this.A*Math.pow(newInputs,this.B);
     }
 

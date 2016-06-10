@@ -79,7 +79,7 @@ class PolynomialRegression extends BaseRegression{
         }
     }
 
-    _compute(x) {
+    _predict(x) {
         var y =0;
         for(var  k = 0; k < this.powers.length; k++) {
             y+=this.coefficients[k]*Math.pow(x,this.powers[k]);

@@ -46,7 +46,7 @@ describe('Non-linear regression', function() {
             result.B.should.approximately(expected.B,10e-4);
 
             var x2 = [20,30];
-            var y2 = result.compute(x2);
+            var y2 = result.predict(x2);
 
             y2[0].should.approximately(expected.A*Math.pow(x2[0],expected.B),10e-4);
             y2[1].should.approximately(expected.A*Math.pow(x2[1],expected.B),10e-4);

@@ -16,7 +16,7 @@ describe('Simple linear regression', function () {
         regression.slope.should.be.approximately(-0.264706, 1e-5);
         regression.intercept.should.be.approximately(50.588235, 1e-5);
 
-        var y = regression.compute(85);
+        var y = regression.predict(85);
         regression.computeX(y).should.equal(85);
         y.should.be.approximately(28.088235294117649, 1e-10);
 
@@ -45,9 +45,9 @@ describe('Simple linear regression', function () {
         regression.r2.should.equal(1);
         regression.slope.should.equal(-2);
         regression.intercept.should.equal(10);
-        regression.compute(6).should.equal(-2);
-        regression.compute(-1).should.equal(12);
-        regression.compute(2.5).should.equal(5);
+        regression.predict(6).should.equal(-2);
+        regression.predict(-1).should.equal(12);
+        regression.predict(2.5).should.equal(5);
         regression.computeX(5).should.equal(2.5);
         regression.computeX(9).should.equal(0.5);
         regression.computeX(-12).should.equal(11);

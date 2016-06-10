@@ -66,7 +66,7 @@ class SimpleLinearRegression extends BaseRegression {
         return out;
     }
 
-    _compute(input) {
+    _predict(input) {
         return this.slope * input + this.intercept;
     };
 

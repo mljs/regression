@@ -48,7 +48,7 @@ class PotentialRegression extends BaseRegression{
         }
     }
 
-    _compute(x) {
+    _predict(x) {
         return this.A*Math.pow(x,this.M);
     }
 

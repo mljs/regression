@@ -48,7 +48,7 @@ class KernelRidgeRegression extends BaseRegression {
         }
     }
 
-    _compute(newInputs) {
+    _predict(newInputs) {
         return this.kernel.compute([newInputs], this.inputs).mmul(this.alpha)[0];
     }
 

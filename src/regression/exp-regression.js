@@ -52,7 +52,7 @@ class ExpRegression extends BaseRegression{
         }
     }
 
-    _compute(newInputs) {
+    _predict(newInputs) {
         return this.C*Math.exp(newInputs*this.A);
     }
 

@@ -1,24 +1,28 @@
 'use strict';
 
 class BaseRegression {
-    compute(x) {
+    predict(x) {
         var y2;
         if(Array.isArray(x)){
             y2 = new Array(x.length);
             for(var i=0;i<x.length;i++){
-                y2[i]=this._compute(x[i]);
+                y2[i]=this._predict(x[i]);
             }
         }
         else if(Number.isFinite(x)){
-                y2 = this._compute(x);
+                y2 = this._predict(x);
         } else {
             throw new TypeError('x must be a number or array')
         }
         return y2;
     }
 
-    _compute(x) {
+    _predict(x) {
         throw new Error('_compute not implemented');
+    }
+    
+    train(options){
+        //Do nothing for this package
     }
     
     /**
@@ -31,7 +35,7 @@ class BaseRegression {
         let n = x.length;
         var y2 = new Array(n);
         for (var i = 0; i < n; i++) {
-            y2[i]=this._compute(x[i]);
+            y2[i]=this._predict(x[i]);
         }
         var xSum = 0;
         var ySum = 0;
