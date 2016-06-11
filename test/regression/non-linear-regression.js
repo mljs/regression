@@ -12,6 +12,7 @@ describe('Non-linear regression', function() {
             var result = new NLR.PotentialRegression(x, y, 2, {computeCoefficient:true});
             result.A.should.be.approximately(4.9073, 10e-5);
             result.M.should.equal(2);
+            result.toString(4).should.equal('XXX');
         });
 
         it('Exponential regresion', function () {
@@ -20,6 +21,8 @@ describe('Non-linear regression', function() {
             var result = new NLR.ExpRegression(x, y, {computeCoefficient:true});
             result.A.should.be.approximately(0.3912023, 10e-7);
             result.C.should.be.approximately(1.579910, 10e-7);
+            result.toString(4).should.equal('1.580*exp(0.3912*x)');
+
         });
 
         it('Polynomial regression', function () {
@@ -32,6 +35,7 @@ describe('Non-linear regression', function() {
                 result.coefficients[i].should.be.approximately(expected[i], 10e-6);
                 result.powers[i].should.equal(i);
             }
+            result.toString(4).should.equal('XXX');
         });
 
         it('Power regression', function () {
@@ -50,6 +54,8 @@ describe('Non-linear regression', function() {
 
             y2[0].should.approximately(expected.A*Math.pow(x2[0],expected.B),10e-4);
             y2[1].should.approximately(expected.A*Math.pow(x2[1],expected.B),10e-4);
+
+            result.toString(4).should.equal('24.13*x^0.6595');
 
         });
 
