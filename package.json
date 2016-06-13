@@ -1,6 +1,6 @@
 {
   "name": "ml-regression",
-  "version": "3.0.0",
+  "version": "1.0.0",
   "description": "Regression algorithms",
   "main": "src/index.js",
   "directories": {
@@ -37,7 +37,8 @@
     "should": "^7.1.0"
   },
   "dependencies": {
-    "ml-kernel": "^2.0.0",
-    "ml-matrix": "^1.0.2"
+    "is-integer": "^1.0.6",
+    "ml-matrix": "^1.0.0",
+    "ml-stat": "^1.1.0"
   }
 }
