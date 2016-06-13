@@ -1,10 +1,15 @@
 "use strict";
 
-var Matrix = require("ml-matrix");
-var isInteger = require("is-integer");
-var SVD = Matrix.DC.SingularValueDecomposition;
+const Matrix = require("ml-matrix");
+const isInteger = require("is-integer");
+const SVD = Matrix.DC.SingularValueDecomposition;
+const BaseRegression = require('./base-regression');
 
-module.exports = PolynomialFitRegression2D;
+
+// Implements the Kernel ridge regression algorithm.
+// http://www.ics.uci.edu/~welling/classnotes/papers_class/Kernel-Ridge.pdf
+class PolynomialFitRegression2D extends BaseRegression {
+
 
 /**
  * Constructor for the 2D polynomial fitting
