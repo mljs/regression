@@ -69,7 +69,7 @@ class PolynomialRegression extends BaseRegression{
             var A = FT.mmul(F);
             var B = FT.mmul(Y.transpose());
 
-            this.coefficients = A.solve(B);
+            this.coefficients = A.solve(B).to1DArray();
             this.powers = powers;
             this.M = M-1;
             if(opt.computeCoefficient){
@@ -121,7 +121,7 @@ class PolynomialRegression extends BaseRegression{
             fn=str+fn;
         }
         if(fn.charAt(0)=='+'){
-            fn.splice(0,1);
+            fn = fn.slice(1);
         }
 
         return fn;

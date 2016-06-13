@@ -56,7 +56,7 @@ class PotentialRegression extends BaseRegression{
         var out = {name: 'potentialRegression', A: this.A, M: this.M};
         if(this.r){
             out.r = this.r;
-            out.r2=this.r2;
+            out.r2 = this.r2;
         }
         return out;
     }
