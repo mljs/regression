@@ -1,7 +1,7 @@
 "use strict";
 
 var Polyfit = require('../..').PolinomialFitting2D;
-
+var Matrix = require("ml-matrix");
 describe("2D polinomial fit", function () {
     var X = new Array(21);
     var y = new Array(21);
@@ -19,6 +19,13 @@ describe("2D polinomial fit", function () {
         for(var i = 0; i < estimatedCoefficients.length; ++i) {
             pf.coefficients[i][0].should.be.approximately(estimatedCoefficients[i], 1e-2);
         }
+    });
+
+    it("Input matrix", function () {
+        var pf = new Polyfit(new Matrix(X),(new Matrix([y])).transpose(),{
+            order: 2
+        });
+        //console.log(pf);
     });
 
     it("Prediction", function () {
