@@ -10,11 +10,10 @@ describe("2D polinomial fit", function () {
         y[i] = i + 20;
     }
 
-    var pf = new Polyfit();
-    pf.train(X, y, {
+    var pf = new Polyfit(X,y,{
         order: 2
     });
-
+    
     it("Training coefficients", function () {
         var estimatedCoefficients = [1.5587e1, 3.8873e-1, 5.2582e-3, 4.8498e-1, 2.1127e-3, -7.3709e-3];
         for(var i = 0; i < estimatedCoefficients.length; ++i) {
@@ -53,8 +52,7 @@ describe("2D polinomial fit", function () {
             y[i] = val * val + val * val;
         }
 
-        var polyFit = new Polyfit();
-        polyFit.train(X, y, {
+        var polyFit = new Polyfit(X, y, {
             order: 2
         });
 
@@ -74,7 +72,7 @@ describe("2D polinomial fit", function () {
     });
 
     it("Export and load options", function () {
-        var model = pf.export();
+        var model = pf.toJSON();
         model = JSON.parse(JSON.stringify(model));
         var pf1 = Polyfit.load(model);
 
