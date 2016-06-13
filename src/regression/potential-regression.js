@@ -62,7 +62,11 @@ class PotentialRegression extends BaseRegression{
     }
 
     toString(precision){
-        return maybeToPrecision(this.A, precision)+"*x^"+this.M;
+        return "y = "+maybeToPrecision(this.A, precision)+"*x^"+this.M;
+    }
+
+    toLaTeX(precision){
+        return "y = "+maybeToPrecision(this.A, precision)+"x^{"+this.M+"}";
     }
 
     static load(json) {

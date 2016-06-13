@@ -102,6 +102,23 @@ class PolynomialRegression extends BaseRegression{
     }
 
     toString(precision){
+        return this._toFormula(precision, false);
+    }
+
+    toLaTeX(precision){
+        return this._toFormula(precision, true);
+    }
+
+    _toFormula(precision, isLaTeX){
+        var sup = "^";
+        var closeSup = "";
+        var times = "*";
+        if(isLaTeX){
+            sup = "^{";
+            closeSup="}";
+            times="";
+        }
+
         var fn =  "",str;
         for(var  k = 0; k < this.coefficients.length ; k++) {
             str="";
@@ -110,9 +127,9 @@ class PolynomialRegression extends BaseRegression{
                     str = maybeToPrecision(this.coefficients[k], precision);
                 else {
                     if (this.powers[k] == 1)
-                        str = maybeToPrecision(this.coefficients[k], precision) + "*x";
+                        str = maybeToPrecision(this.coefficients[k], precision) + times +"x";
                     else {
-                        str = maybeToPrecision(this.coefficients[k], precision) + "*x^" + this.powers[k];
+                        str = maybeToPrecision(this.coefficients[k], precision) + times +"x" + sup + this.powers[k]+closeSup;
                     }
                 }
                 if (this.coefficients[k] > 0)
@@ -124,7 +141,7 @@ class PolynomialRegression extends BaseRegression{
             fn = fn.slice(1);
         }
 
-        return fn;
+        return "y = "+fn;
     }
 
     static load(json) {

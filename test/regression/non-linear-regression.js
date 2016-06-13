@@ -13,7 +13,8 @@ describe('Non-linear regression', function() {
             result.A.should.be.approximately(4.9073, 10e-5);
             result.M.should.equal(2);
             result.r2.should.greaterThan(0.8);
-            result.toString(4).should.equal('4.907*x^2');
+            result.toString(4).should.equal('y = 4.907*x^2');
+            result.toLaTeX(4).should.equal('y = 4.907x^{2}');
         });
 
         it('Exponential regresion', function () {
@@ -23,7 +24,8 @@ describe('Non-linear regression', function() {
             result.A.should.be.approximately(0.3912023, 10e-7);
             result.C.should.be.approximately(1.579910, 10e-7);
             result.r2.should.greaterThan(0.8);
-            result.toString(4).should.equal('1.580*exp(0.3912*x)');
+            result.toString(4).should.equal('y = 1.580*exp(0.3912*x)');
+            result.toLaTeX(4).should.equal('y = 1.580e^{0.3912x}');
         });
 
         it('Polynomial regression', function () {
@@ -37,7 +39,8 @@ describe('Non-linear regression', function() {
                 result.powers[i].should.equal(i);
             }
             result.r2.should.greaterThan(0.8);
-            result.toString(4).should.equal('0.1785*x^2-0.1925*x+0.8505');
+            result.toString(4).should.equal('y = 0.1785*x^2-0.1925*x+0.8505');
+            result.toLaTeX(4).should.equal('y = 0.1785x^{2}-0.1925x+0.8505');
         });
 
         it('Power regression', function () {
@@ -57,7 +60,8 @@ describe('Non-linear regression', function() {
             y2[0].should.approximately(expected.A*Math.pow(x2[0],expected.B),10e-4);
             y2[1].should.approximately(expected.A*Math.pow(x2[1],expected.B),10e-4);
             result.r2.should.greaterThan(0.8);
-            result.toString(4).should.equal('24.13*x^0.6595');
+            result.toString(4).should.equal('y = 24.13*x^0.6595');
+            result.toLaTeX(4).should.equal('y = 24.13x^{0.6595}');
 
         });
 

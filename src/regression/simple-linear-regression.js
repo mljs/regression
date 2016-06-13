@@ -90,6 +90,10 @@ class SimpleLinearRegression extends BaseRegression {
         return result;
     };
 
+    toLaTeX(precision) {
+        return toString(precision);
+    };
+
     static load(json) {
         if (json.name !== 'simpleLinearRegression') {
             throw new TypeError('not a SLR model');

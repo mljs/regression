@@ -61,7 +61,11 @@ class PowerRegression extends BaseRegression{
     }
 
     toString(precision){
-        return maybeToPrecision(this.A, precision)+"*x^"+maybeToPrecision(this.B, precision);
+        return "y = "+maybeToPrecision(this.A, precision)+"*x^"+maybeToPrecision(this.B, precision);
+    }
+
+    toLaTeX(precision){
+        return "y = "+maybeToPrecision(this.A, precision)+"x^{"+maybeToPrecision(this.B, precision)+"}";
     }
 
     static load(json) {

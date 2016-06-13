@@ -24,6 +24,14 @@ class BaseRegression {
     train(options){
         //Do nothing for this package
     }
+
+    toString(precision){
+        return "";
+    }
+
+    toLaTeX(precision){
+        return "";
+    }
     
     /**
      * Return the correlation coefficient of determination (r).

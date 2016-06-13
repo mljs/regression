@@ -66,7 +66,11 @@ class ExpRegression extends BaseRegression{
     }
 
     toString(precision){
-        return maybeToPrecision(this.C, precision)+"*exp("+maybeToPrecision(this.A, precision)+"*x)";
+        return "y = "+maybeToPrecision(this.C, precision)+"*exp("+maybeToPrecision(this.A, precision)+"*x)";
+    }
+
+    toLaTeX(precision){
+        return "y = "+maybeToPrecision(this.C, precision)+"e^{"+maybeToPrecision(this.A, precision)+"x}";
     }
 
     static load(json) {
