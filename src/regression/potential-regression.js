@@ -28,9 +28,8 @@ class PotentialRegression extends BaseRegression{
         if (x === true) { // reloading model
             this.A = outputs.A;
             this.M = outputs.M;
-            if(y.r){
-                this.r = y.r;
-                this.r2 = y.r2;
+            if(y.quality){
+                this.quality = y.quality;
             }
         } else {
             var n = x.length;
@@ -41,9 +40,8 @@ class PotentialRegression extends BaseRegression{
             var linear = new PolynomialRegression(x, y, [M] ,{computeCoefficient:true});
             this.A = linear.coefficients[0];
             this.M = M;
-            if(opt.computeCoefficient){
-                this.r = this.rCoefficient(x,y);
-                this.r2 = this.r*this.r;
+            if(opt.computeQuality){
+                this.quality = this.modelQuality(x,y);
             }
         }
     }
@@ -54,9 +52,8 @@ class PotentialRegression extends BaseRegression{
 
     toJSON() {
         var out = {name: 'potentialRegression', A: this.A, M: this.M};
-        if(this.r){
-            out.r = this.r;
-            out.r2 = this.r2;
+        if(this.quality){
+            out.quality = this.quality;
         }
         return out;
     }
@@ -66,7 +63,11 @@ class PotentialRegression extends BaseRegression{
     }
 
     toLaTeX(precision){
-        return "y = "+maybeToPrecision(this.A, precision)+"x^{"+this.M+"}";
+
+        if (this.M >= 0)
+            return "y = "+maybeToPrecision(this.A, precision)+"x^{"+this.M+"}";
+        else
+            return "y = \\frac{"+maybeToPrecision(this.A, precision)+"}{x^{"+(-this.M)+"}}";
     }
 
     static load(json) {

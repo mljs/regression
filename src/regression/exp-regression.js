@@ -28,9 +28,8 @@ class ExpRegression extends BaseRegression{
         if (x === true) { // reloading model
             this.A = outputs.A;
             this.C = outputs.C;
-            if(y.r){
-                this.r = y.r;
-                this.r2 = y.r2;
+            if(y.quality){
+                this.quality = y.quality;
             }
         } else {
             var n = x.length;
@@ -45,9 +44,8 @@ class ExpRegression extends BaseRegression{
             var linear = new SimpleLinearRegression(x, yl, {computeCoefficient:false});
             this.A = linear.slope;
             this.C = Math.exp(linear.intercept);
-            if(opt.computeCoefficient){
-                this.r = this.rCoefficient(x,y);
-                this.r2 = this.r*this.r;
+            if(opt.computeQuality){
+                this.quality = this.modelQuality(x,y);
             }
         }
     }
@@ -58,9 +56,8 @@ class ExpRegression extends BaseRegression{
 
     toJSON() {
         var out = {name: 'expRegression', A: this.A, C: this.C};
-        if(this.r){
-            out.r = this.r;
-            out.r2=this.r2;
+        if(this.quality){
+            out.quality = this.quality;
         }
         return out;
     }
@@ -70,7 +67,11 @@ class ExpRegression extends BaseRegression{
     }
 
     toLaTeX(precision){
-        return "y = "+maybeToPrecision(this.C, precision)+"e^{"+maybeToPrecision(this.A, precision)+"x}";
+        if(this.A>=0)
+            return "y = "+maybeToPrecision(this.C, precision)+"e^{"+maybeToPrecision(this.A, precision)+"x}";
+        else
+            return "y = \\frac{"+maybeToPrecision(this.C, precision)+"}{e^{"+maybeToPrecision(-this.A, precision)+"x}}";
+
     }
 
     static load(json) {

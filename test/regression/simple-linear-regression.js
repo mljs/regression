@@ -27,22 +27,24 @@ describe('Simple linear regression', function () {
         var inputs = [1.47, 1.50, 1.52, 1.55, 1.57, 1.60, 1.63, 1.65, 1.68, 1.70, 1.73, 1.75, 1.78, 1.80, 1.83];
         var outputs = [52.21, 53.12, 54.48, 55.84, 57.20, 58.57, 59.93, 61.29, 63.11, 64.47, 66.28, 68.10, 69.92, 72.19, 74.46];
 
-        var regression = new SLR(inputs, outputs, {computeCoefficient: true});
+        var regression = new SLR(inputs, outputs, {computeQuality: true});
 
-        //regression.r2.should.be.a.Number().and.equal(regression.coefficientOfDetermination);
+        //regression.quality.r2.should.be.a.Number().and.equal(regression.coefficientOfDetermination);
 
         regression.slope.should.be.approximately(61.272, 1e-3);
         regression.intercept.should.be.approximately(-39.062, 1e-3);
-        regression.r.should.be.approximately(0.9945, 1e-4);
-        regression.r2.should.equal(regression.r * regression.r);
+        regression.quality.r.should.be.approximately(0.9945, 1e-4);
+        regression.quality.r2.should.equal(regression.quality.r * regression.quality.r);
+        regression.quality.chi2.should.lessThan(1);
+        regression.quality.rmsd.should.lessThan(1);
     });
     it('SLR3', function () {
         var inputs = [0, 1, 2, 3, 4, 5];
         var outputs = [10, 8, 6, 4, 2, 0];
 
-        var regression = new SLR(inputs, outputs, {computeCoefficient: true});
+        var regression = new SLR(inputs, outputs, {computeQuality: true});
 
-        regression.r2.should.equal(1);
+        regression.quality.r2.should.equal(1);
         regression.slope.should.equal(-2);
         regression.intercept.should.equal(10);
         regression.predict(6).should.equal(-2);
@@ -51,8 +53,9 @@ describe('Simple linear regression', function () {
         regression.computeX(5).should.equal(2.5);
         regression.computeX(9).should.equal(0.5);
         regression.computeX(-12).should.equal(11);
-        
-        regression.r.should.be.greaterThan(0);
+        regression.quality.r.should.be.greaterThan(0);
+        regression.quality.chi2.should.equal(0);
+        regression.quality.rmsd.should.equal(0);
 
         regression.toString(3).should.equal('y = -2.00x + 10.0');
     });

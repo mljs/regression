@@ -23,9 +23,9 @@ class KernelRidgeRegression extends BaseRegression {
             this.kernelType = outputs.kernelType;
             this.kernelOptions = outputs.kernelOptions;
             this.kernel = new Kernel(outputs.kernelType, outputs.kernelOptions);
-            if(outputs.r){
-                this.r = outputs.r;
-                this.r2 = outputs.r2;
+
+            if(outputs.quality){
+                this.quality = outputs.quality;
             }
         } else {
             options = Object.assign({}, defaultOptions, options);
@@ -41,9 +41,8 @@ class KernelRidgeRegression extends BaseRegression {
             this.kernelOptions = options.kernelOptions;
             this.kernel = kernelFunction;
 
-            if(options.computeCoefficient){
-                this.r = this.rCoefficient(inputs, outputs);
-                this.r2 = this.r*this.r;
+            if(options.computeQuality){
+                this.quality=this.modelQuality(inputs,outputs);
             }
         }
     }
@@ -53,13 +52,17 @@ class KernelRidgeRegression extends BaseRegression {
     }
 
     toJSON() {
-        return {
+        var out = {
             name: 'kernelRidgeRegression',
             alpha: this.alpha,
             inputs: this.inputs,
             kernelType: this.kernelType,
             kernelOptions: this.kernelOptions
         };
+        if(this.quality){
+            out.quality = this.quality;
+        }
+        return out;
     }
 
     static load(json) {

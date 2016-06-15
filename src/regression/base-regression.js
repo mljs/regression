@@ -34,12 +34,12 @@ class BaseRegression {
     }
     
     /**
-     * Return the correlation coefficient of determination (r).
+     * Return the correlation coefficient of determination (r) and chi-square.
      * @param x
      * @param y
      * @returns {number}
      */
-    rCoefficient(x, y) {
+    modelQuality(x, y) {
         let n = x.length;
         var y2 = new Array(n);
         for (var i = 0; i < n; i++) {
@@ -47,7 +47,8 @@ class BaseRegression {
         }
         var xSum = 0;
         var ySum = 0;
-
+        var chi2 = 0;
+        var rmsd = 0;
         var xSquared = 0;
         var ySquared = 0;
         var xY = 0;
@@ -58,10 +59,16 @@ class BaseRegression {
             xSquared += y2[i] * y2[i];
             ySquared += y[i] * y[i];
             xY += y2[i] * y[i];
+            if(y[i]!=0)
+                chi2 += (y[i]-y2[i])*(y[i]-y2[i])/y[i];
+            rmsd = (y[i]-y2[i])*(y[i]-y2[i]);
         }
 
-        return (n*xY-xSum*ySum)/Math.sqrt((n*xSquared-xSum*xSum)*(n*ySquared-ySum*ySum));
+        var r = (n*xY-xSum*ySum)/Math.sqrt((n*xSquared-xSum*xSum)*(n*ySquared-ySum*ySum));
+
+        return {r:r, r2:r*r, chi2:chi2, rmsd:rmsd*rmsd/n};
     }
+
 }
 
 module.exports = BaseRegression;

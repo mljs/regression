@@ -27,6 +27,9 @@ class PolynomialFitRegression2D extends BaseRegression {
                 this.r = outputs.r;
                 this.r2 = outputs.r2;
             }
+            if(outputs.chi2){
+                this.chi2 = outputs.chi2;
+            }
         } else {
             options = Object.assign({}, defaultOptions, options);
             this.order = options.order;
@@ -35,9 +38,9 @@ class PolynomialFitRegression2D extends BaseRegression {
             this.y = outputs;
             
             this.train(this.X,this.y,options);
-            if(options.computeCoefficient){
-                this.r = this.rCoefficient(inputs, outputs);
-                this.r2 = this.r*this.r;
+
+            if(options.computeQuality){
+                this.quality = this.modelQuality(inputs,outputs);
             }
         }
     }
@@ -134,9 +137,7 @@ class PolynomialFitRegression2D extends BaseRegression {
 
         for(var i = 0; i <= this.order; i++) {
             for(var j = 0; j <= this.order - i; j++) {
-                var value = Math.pow(x1, i)*(Math.pow(x2, j));
-                value*=this.coefficients[column][0];
-                y+=value;
+                y+= Math.pow(x1, i)*(Math.pow(x2, j))*this.coefficients[column][0];
                 column++;
             }
         }
@@ -145,11 +146,15 @@ class PolynomialFitRegression2D extends BaseRegression {
     }
 
     toJSON() {
-        return {
+        var out = {
             name: "polyfit2D",
             order: this.order,
             coefficients: this.coefficients
         };
+        if(this.quality){
+            out.quality = this.quality;
+        }
+        return out;
     };
 
     static load(json) {

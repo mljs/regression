@@ -26,6 +26,9 @@ class PowerRegression extends BaseRegression{
                 this.r = y.r;
                 this.r2 = y.r2;
             }
+            if(y.chi2){
+                this.chi2 = y.chi2;
+            }
         } else {
             var n = x.length;
             if (n !== y.length) {
@@ -40,9 +43,8 @@ class PowerRegression extends BaseRegression{
             var linear = new SimpleLinearRegression(xl, yl, {computeCoefficient:false});
             this.A = Math.exp(linear.intercept);
             this.B = linear.slope;
-            if(opt.computeCoefficient){
-                this.r = this.rCoefficient(x,y);
-                this.r2 = this.r*this.r;
+            if(opt.computeQuality){
+                this.quality = this.modelQuality(x,y);
             }
         }
     }
@@ -53,9 +55,8 @@ class PowerRegression extends BaseRegression{
 
     toJSON() {
         var out = {name: 'powerRegression', A: this.A, B: this.B};
-        if(this.r){
-            out.r = this.r;
-            out.r2=this.r2;
+        if(this.quality){
+            out.quality = this.quality;
         }
         return out;
     }
@@ -64,8 +65,11 @@ class PowerRegression extends BaseRegression{
         return "y = "+maybeToPrecision(this.A, precision)+"*x^"+maybeToPrecision(this.B, precision);
     }
 
-    toLaTeX(precision){
-        return "y = "+maybeToPrecision(this.A, precision)+"x^{"+maybeToPrecision(this.B, precision)+"}";
+    toLaTeX(precision) {
+        if (this.B >= 0)
+            return "y = " + maybeToPrecision(this.A, precision) + "x^{" + maybeToPrecision(this.B, precision) + "}";
+        else
+            return "y = \\frac{" + maybeToPrecision(this.A, precision) + "}{x^{" + maybeToPrecision(-this.B, precision) + "}}";
     }
 
     static load(json) {

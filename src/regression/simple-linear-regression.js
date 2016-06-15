@@ -16,6 +16,9 @@ class SimpleLinearRegression extends BaseRegression {
                 this.r = y.r;
                 this.r2 = y.r2;
             }
+            if(y.chi2){
+                this.chi2 = y.chi2;
+            }
         }
         else{
             var n = x.length;
@@ -44,9 +47,8 @@ class SimpleLinearRegression extends BaseRegression {
             this.slope = numerator / (n * xSquared - xSum * xSum);
             this.intercept = (1 / n) * ySum - this.slope * (1 / n) * xSum;
             this.coefficients = [this.intercept, this.slope];
-            if(options.computeCoefficient){
-                this.r = this.rCoefficient(x,y);
-                this.r2 = this.r*this.r;
+            if(options.computeQuality){
+                this.quality = this.modelQuality(x,y);
             }
         }
 
@@ -58,9 +60,8 @@ class SimpleLinearRegression extends BaseRegression {
             slope: this.slope,
             intercept: this.intercept
         }
-        if (this.r) {
-            out. r=this.r;
-            out.r2 = this.r2;
+        if(this.quality){
+            out.quality = this.quality;
         }
 
         return out;

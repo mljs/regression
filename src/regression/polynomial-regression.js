@@ -32,9 +32,8 @@ class PolynomialRegression extends BaseRegression{
             this.coefficients = outputs.coefficients;
             this.powers = outputs.powers;
             this.M = outputs.M;
-            if(y.r){
-                this.r = y.r;
-                this.r2 = y.r2;
+            if(y.quality){
+                this.quality = y.quality;
             }
         } else {
             var n = x.length;
@@ -72,9 +71,8 @@ class PolynomialRegression extends BaseRegression{
             this.coefficients = A.solve(B).to1DArray();
             this.powers = powers;
             this.M = M-1;
-            if(opt.computeCoefficient){
-                this.r = this.rCoefficient(x,y);
-                this.r2 = this.r*this.r;
+            if(opt.computeQuality){
+                this.quality = this.modelQuality(x,y);
             }
         }
     }
@@ -94,9 +92,8 @@ class PolynomialRegression extends BaseRegression{
             M: this.M
         };
 
-        if(this.r){
-            out.r = this.r;
-            out.r2=this.r2;
+        if(this.quality){
+            out.quality = this.quality;
         }
         return out;
     }
