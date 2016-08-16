@@ -64,9 +64,9 @@ class PolynomialRegression extends BaseRegression{
                 }
             }
 
-            var FT = F.transpose();
+            var FT = F.transposeView();
             var A = FT.mmul(F);
-            var B = FT.mmul(Y.transpose());
+            var B = FT.mmul(Y.transposeView());
 
             this.coefficients = A.solve(B).to1DArray();
             this.powers = powers;
