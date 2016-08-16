@@ -1,3 +1,15 @@
+<a name="4.0.1"></a>
+## [4.0.1](https://github.com/mljs/regression/compare/v2.0.0...v4.0.1) (2016-08-16)
+
+
+### Features
+
+* export and load implemented. ([ac42974](https://github.com/mljs/regression/commit/ac42974))
+* fit implemented. ([dd31444](https://github.com/mljs/regression/commit/dd31444))
+* predict implemented. ([4632fb7](https://github.com/mljs/regression/commit/4632fb7))
+
+
+
 1.1.1 / 2015-11-21
 ==================
 
