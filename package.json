@@ -31,10 +31,10 @@
   },
   "homepage": "https://github.com/mljs/regression",
   "devDependencies": {
-    "istanbul": "^0.3.19",
-    "mocha": "^2.3.1",
-    "mocha-better-spec-reporter": "^2.1.1",
-    "should": "^7.1.0"
+    "istanbul": "^0.4.4",
+    "mocha": "^3.0.2",
+    "mocha-better-spec-reporter": "^3.0.2",
+    "should": "^11.1.0"
   },
   "dependencies": {
     "is-integer": "^1.0.6",
