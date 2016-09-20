@@ -2,6 +2,7 @@
 
 const BaseRegression = require('./base-regression');
 const maybeToPrecision = require('./util').maybeToPrecision;
+const median = require('ml-stat/array').median;
 
 /**
  * Theil–Sen estimator
@@ -50,7 +51,7 @@ class TheilSenRegression extends BaseRegression {
                 }
             }
             slopes.length = count;
-            let medianSlope = slopes.sort()[Math.floor(count / 2)];
+            let medianSlope = median(slopes);
 
             let cuts = new Array(len);
             for (let i = 0; i < len; ++i) {
@@ -58,7 +59,7 @@ class TheilSenRegression extends BaseRegression {
             }
 
             this.slope = medianSlope;
-            this.intercept = cuts.sort()[Math.floor(len / 2)];
+            this.intercept = median(cuts);
             this.coefficients = [this.intercept, this.slope];
             if (options.computeQuality) {
                 this.quality = this.modelQuality(x, y);
