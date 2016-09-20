@@ -1,7 +1,7 @@
 'use strict';
 
 var Matrix = require('ml-matrix');
-var KernelRidgeRegression = require('../..').KernelRidgeRegression;
+var KernelRidgeRegression = require('../src/index.js').KernelRidgeRegression;
 
 var nSamples = 10;
 var nVars = 2;

@@ -1,6 +1,6 @@
 'use strict';
 
-var Polyfit = require('../..').PolinomialFitting2D;
+var Polyfit = require('../src/index.js').PolinomialFitting2D;
 var Matrix = require('ml-matrix');
 describe('2D polinomial fit', function () {
     var X = new Array(21);

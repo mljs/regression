@@ -1,6 +1,6 @@
 'use strict';
 
-var SLR = require('../..').SLR;
+var SLR = require('../src/index.js').SLR;
 
 describe('Simple linear regression', function () {
     it('SLR1', function () {

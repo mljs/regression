@@ -1,6 +1,6 @@
 'use strict';
 
-var NLR = require('../..').NLR;
+var NLR = require('../src/index.js').NLR;
 
 describe('Non-linear regression', function () {
 
