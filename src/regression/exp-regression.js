@@ -26,8 +26,8 @@ class ExpRegression extends BaseRegression {
         super();
         let opt = options || {};
         if (x === true) { // reloading model
-            this.A = options.A;
-            this.C = options.C;
+            this.A = y.A;
+            this.C = y.C;
             if (y.quality) {
                 this.quality = y.quality;
             }

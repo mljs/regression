@@ -29,9 +29,9 @@ class PolynomialRegression extends BaseRegression {
         super();
         let opt = options || {};
         if (x === true) { // reloading model
-            this.coefficients = options.coefficients;
-            this.powers = options.powers;
-            this.M = options.M;
+            this.coefficients = y.coefficients;
+            this.powers = y.powers;
+            this.M = y.M;
             if (y.quality) {
                 this.quality = y.quality;
             }

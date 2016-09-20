@@ -27,8 +27,8 @@ class PotentialRegression extends BaseRegression {
         super();
         let opt = options || {};
         if (x === true) { // reloading model
-            this.A = options.A;
-            this.M = options.M;
+            this.A = y.A;
+            this.M = y.M;
             if (y.quality) {
                 this.quality = y.quality;
             }

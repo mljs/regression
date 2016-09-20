@@ -20,8 +20,8 @@ class PowerRegression extends BaseRegression {
         super();
         let opt = options || {};
         if (x === true) { // reloading model
-            this.A = options.A;
-            this.B = options.B;
+            this.A = y.A;
+            this.B = y.B;
             if (y.r) {
                 this.r = y.r;
                 this.r2 = y.r2;
