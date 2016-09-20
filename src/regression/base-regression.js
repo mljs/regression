@@ -3,16 +3,15 @@
 class BaseRegression {
     predict(x) {
         var y2;
-        if(Array.isArray(x)){
+        if (Array.isArray(x)) {
             y2 = new Array(x.length);
-            for(var i=0;i<x.length;i++){
-                y2[i]=this._predict(x[i]);
+            for (var i = 0; i < x.length; i++) {
+                y2[i] = this._predict(x[i]);
             }
-        }
-        else if(Number.isFinite(x)){
-                y2 = this._predict(x);
+        } else if (Number.isFinite(x)) {
+            y2 = this._predict(x);
         } else {
-            throw new TypeError('x must be a number or array')
+            throw new TypeError('x must be a number or array');
         }
         return y2;
     }
@@ -20,30 +19,30 @@ class BaseRegression {
     _predict(x) {
         throw new Error('_compute not implemented');
     }
-    
-    train(options){
+
+    train(options) {
         //Do nothing for this package
     }
 
-    toString(precision){
-        return "";
+    toString(precision) {
+        return '';
     }
 
-    toLaTeX(precision){
-        return "";
+    toLaTeX(precision) {
+        return '';
     }
-    
+
     /**
      * Return the correlation coefficient of determination (r) and chi-square.
      * @param x
      * @param y
-     * @returns {number}
+     * @returns {object}
      */
     modelQuality(x, y) {
         let n = x.length;
         var y2 = new Array(n);
-        for (var i = 0; i < n; i++) {
-            y2[i]=this._predict(x[i]);
+        for (let i = 0; i < n; i++) {
+            y2[i] = this._predict(x[i]);
         }
         var xSum = 0;
         var ySum = 0;
@@ -53,20 +52,20 @@ class BaseRegression {
         var ySquared = 0;
         var xY = 0;
 
-        for (var i = 0; i < n; i++) {
+        for (let i = 0; i < n; i++) {
             xSum += y2[i];
             ySum += y[i];
             xSquared += y2[i] * y2[i];
             ySquared += y[i] * y[i];
             xY += y2[i] * y[i];
-            if(y[i]!=0)
-                chi2 += (y[i]-y2[i])*(y[i]-y2[i])/y[i];
-            rmsd = (y[i]-y2[i])*(y[i]-y2[i]);
+            if (y[i] !== 0)
+                chi2 += (y[i] - y2[i]) * (y[i] - y2[i]) / y[i];
+            rmsd = (y[i] - y2[i]) * (y[i] - y2[i]);
         }
 
-        var r = (n*xY-xSum*ySum)/Math.sqrt((n*xSquared-xSum*xSum)*(n*ySquared-ySum*ySum));
+        var r = (n * xY - xSum * ySum) / Math.sqrt((n * xSquared - xSum * xSum) * (n * ySquared - ySum * ySum));
 
-        return {r:r, r2:r*r, chi2:chi2, rmsd:rmsd*rmsd/n};
+        return {r: r, r2: r * r, chi2: chi2, rmsd: rmsd * rmsd / n};
     }
 
 }

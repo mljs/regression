@@ -9,7 +9,7 @@ const defaultOptions = {
     lambda: 0.1,
     kernelType: 'gaussian',
     kernelOptions: {},
-    computeCoefficient:false
+    computeCoefficient: false
 };
 
 // Implements the Kernel ridge regression algorithm.
@@ -24,7 +24,7 @@ class KernelRidgeRegression extends BaseRegression {
             this.kernelOptions = outputs.kernelOptions;
             this.kernel = new Kernel(outputs.kernelType, outputs.kernelOptions);
 
-            if(outputs.quality){
+            if (outputs.quality) {
                 this.quality = outputs.quality;
             }
         } else {
@@ -41,8 +41,8 @@ class KernelRidgeRegression extends BaseRegression {
             this.kernelOptions = options.kernelOptions;
             this.kernel = kernelFunction;
 
-            if(options.computeQuality){
-                this.quality=this.modelQuality(inputs,outputs);
+            if (options.computeQuality) {
+                this.quality = this.modelQuality(inputs, outputs);
             }
         }
     }
@@ -59,7 +59,7 @@ class KernelRidgeRegression extends BaseRegression {
             kernelType: this.kernelType,
             kernelOptions: this.kernelOptions
         };
-        if(this.quality){
+        if (this.quality) {
             out.quality = this.quality;
         }
         return out;

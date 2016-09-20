@@ -9,7 +9,7 @@ const maybeToPrecision = require('./util').maybeToPrecision;
 const SimpleLinearRegression = require('./simple-linear-regression');
 const BaseRegression = require('./base-regression');
 
-class PowerRegression extends BaseRegression{
+class PowerRegression extends BaseRegression {
     /**
      * @constructor
      * @param x: Independent variable
@@ -18,15 +18,15 @@ class PowerRegression extends BaseRegression{
      */
     constructor(x, y, options) {
         super();
-        let opt = options||{};
+        let opt = options || {};
         if (x === true) { // reloading model
-            this.A = outputs.A;
-            this.B = outputs.B;
-            if(y.r){
+            this.A = y.A;
+            this.B = y.B;
+            if (y.r) {
                 this.r = y.r;
                 this.r2 = y.r2;
             }
-            if(y.chi2){
+            if (y.chi2) {
                 this.chi2 = y.chi2;
             }
         } else {
@@ -36,40 +36,40 @@ class PowerRegression extends BaseRegression{
             }
             var xl = new Array(n), yl = new Array(n);
             for (var i = 0; i < n; i++) {
-                xl[i]=Math.log(x[i]);
-                yl[i]=Math.log(y[i]);
+                xl[i] = Math.log(x[i]);
+                yl[i] = Math.log(y[i]);
             }
 
-            var linear = new SimpleLinearRegression(xl, yl, {computeCoefficient:false});
+            var linear = new SimpleLinearRegression(xl, yl, {computeCoefficient: false});
             this.A = Math.exp(linear.intercept);
             this.B = linear.slope;
-            if(opt.computeQuality){
-                this.quality = this.modelQuality(x,y);
+            if (opt.computeQuality) {
+                this.quality = this.modelQuality(x, y);
             }
         }
     }
 
     _predict(newInputs) {
-        return this.A*Math.pow(newInputs,this.B);
+        return this.A * Math.pow(newInputs, this.B);
     }
 
     toJSON() {
         var out = {name: 'powerRegression', A: this.A, B: this.B};
-        if(this.quality){
+        if (this.quality) {
             out.quality = this.quality;
         }
         return out;
     }
 
-    toString(precision){
-        return "y = "+maybeToPrecision(this.A, precision)+"*x^"+maybeToPrecision(this.B, precision);
+    toString(precision) {
+        return 'y = ' + maybeToPrecision(this.A, precision) + '*x^' + maybeToPrecision(this.B, precision);
     }
 
     toLaTeX(precision) {
         if (this.B >= 0)
-            return "y = " + maybeToPrecision(this.A, precision) + "x^{" + maybeToPrecision(this.B, precision) + "}";
+            return 'y = ' + maybeToPrecision(this.A, precision) + 'x^{' + maybeToPrecision(this.B, precision) + '}';
         else
-            return "y = \\frac{" + maybeToPrecision(this.A, precision) + "}{x^{" + maybeToPrecision(-this.B, precision) + "}}";
+            return 'y = \\frac{' + maybeToPrecision(this.A, precision) + '}{x^{' + maybeToPrecision(-this.B, precision) + '}}';
     }
 
     static load(json) {

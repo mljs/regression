@@ -15,7 +15,7 @@ const maybeToPrecision = require('./util').maybeToPrecision;
 const SimpleLinearRegression = require('./simple-linear-regression');
 const BaseRegression = require('./base-regression');
 
-class ExpRegression extends BaseRegression{
+class ExpRegression extends BaseRegression {
     /**
      * @constructor
      * @param x: Independent variable
@@ -24,11 +24,11 @@ class ExpRegression extends BaseRegression{
      */
     constructor(x, y, options) {
         super();
-        let opt = options||{};
+        let opt = options || {};
         if (x === true) { // reloading model
-            this.A = outputs.A;
-            this.C = outputs.C;
-            if(y.quality){
+            this.A = y.A;
+            this.C = y.C;
+            if (y.quality) {
                 this.quality = y.quality;
             }
         } else {
@@ -38,39 +38,39 @@ class ExpRegression extends BaseRegression{
             }
             var yl = new Array(n);
             for (var i = 0; i < n; i++) {
-                yl[i]=Math.log(y[i]);
+                yl[i] = Math.log(y[i]);
             }
 
-            var linear = new SimpleLinearRegression(x, yl, {computeCoefficient:false});
+            var linear = new SimpleLinearRegression(x, yl, {computeCoefficient: false});
             this.A = linear.slope;
             this.C = Math.exp(linear.intercept);
-            if(opt.computeQuality){
-                this.quality = this.modelQuality(x,y);
+            if (opt.computeQuality) {
+                this.quality = this.modelQuality(x, y);
             }
         }
     }
 
     _predict(newInputs) {
-        return this.C*Math.exp(newInputs*this.A);
+        return this.C * Math.exp(newInputs * this.A);
     }
 
     toJSON() {
         var out = {name: 'expRegression', A: this.A, C: this.C};
-        if(this.quality){
+        if (this.quality) {
             out.quality = this.quality;
         }
         return out;
     }
 
-    toString(precision){
-        return "y = "+maybeToPrecision(this.C, precision)+"*exp("+maybeToPrecision(this.A, precision)+"*x)";
+    toString(precision) {
+        return 'y = ' + maybeToPrecision(this.C, precision) + '*exp(' + maybeToPrecision(this.A, precision) + '*x)';
     }
 
-    toLaTeX(precision){
-        if(this.A>=0)
-            return "y = "+maybeToPrecision(this.C, precision)+"e^{"+maybeToPrecision(this.A, precision)+"x}";
+    toLaTeX(precision) {
+        if (this.A >= 0)
+            return 'y = ' + maybeToPrecision(this.C, precision) + 'e^{' + maybeToPrecision(this.A, precision) + 'x}';
         else
-            return "y = \\frac{"+maybeToPrecision(this.C, precision)+"}{e^{"+maybeToPrecision(-this.A, precision)+"x}}";
+            return 'y = \\frac{' + maybeToPrecision(this.C, precision) + '}{e^{' + maybeToPrecision(-this.A, precision) + 'x}}';
 
     }
 
@@ -78,10 +78,9 @@ class ExpRegression extends BaseRegression{
         if (json.name !== 'expRegression') {
             throw new TypeError('not a exp regression model');
         }
-        return new expRegression(true, json);
+        return new ExpRegression(true, json);
     }
 }
-
 
 
 module.exports = ExpRegression;
