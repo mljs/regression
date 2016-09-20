@@ -13,22 +13,23 @@
 
 const maybeToPrecision = require('./util').maybeToPrecision;
 const PolynomialRegression = require('./polynomial-regression');
+const PowerRegression = require('./power-regression');
 const BaseRegression = require('./base-regression');
 
-class PotentialRegression extends BaseRegression{
+class PotentialRegression extends BaseRegression {
     /**
      * @constructor
      * @param x: Independent variable
      * @param y: Dependent variable
      * @param options
      */
-    constructor(x, y, M,options) {
+    constructor(x, y, M, options) {
         super();
-        let opt = options||{};
+        let opt = options || {};
         if (x === true) { // reloading model
-            this.A = outputs.A;
-            this.M = outputs.M;
-            if(y.quality){
+            this.A = options.A;
+            this.M = options.M;
+            if (y.quality) {
                 this.quality = y.quality;
             }
         } else {
@@ -37,37 +38,37 @@ class PotentialRegression extends BaseRegression{
                 throw new RangeError('input and output array have a different length');
             }
 
-            var linear = new PolynomialRegression(x, y, [M] ,{computeCoefficient:true});
+            var linear = new PolynomialRegression(x, y, [M], {computeCoefficient: true});
             this.A = linear.coefficients[0];
             this.M = M;
-            if(opt.computeQuality){
-                this.quality = this.modelQuality(x,y);
+            if (opt.computeQuality) {
+                this.quality = this.modelQuality(x, y);
             }
         }
     }
 
     _predict(x) {
-        return this.A*Math.pow(x,this.M);
+        return this.A * Math.pow(x, this.M);
     }
 
     toJSON() {
         var out = {name: 'potentialRegression', A: this.A, M: this.M};
-        if(this.quality){
+        if (this.quality) {
             out.quality = this.quality;
         }
         return out;
     }
 
-    toString(precision){
-        return "y = "+maybeToPrecision(this.A, precision)+"*x^"+this.M;
+    toString(precision) {
+        return 'y = ' + maybeToPrecision(this.A, precision) + '*x^' + this.M;
     }
 
-    toLaTeX(precision){
+    toLaTeX(precision) {
 
         if (this.M >= 0)
-            return "y = "+maybeToPrecision(this.A, precision)+"x^{"+this.M+"}";
+            return 'y = ' + maybeToPrecision(this.A, precision) + 'x^{' + this.M + '}';
         else
-            return "y = \\frac{"+maybeToPrecision(this.A, precision)+"}{x^{"+(-this.M)+"}}";
+            return 'y = \\frac{' + maybeToPrecision(this.A, precision) + '}{x^{' + (-this.M) + '}}';
     }
 
     static load(json) {

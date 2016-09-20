@@ -9,18 +9,17 @@ class SimpleLinearRegression extends BaseRegression {
     constructor(x, y, options) {
         options = options || {};
         super();
-        if(x===true){
+        if (x === true) {
             this.slope = y.slope;
             this.intercept = y.intercept;
-            if(y.r){
+            if (y.r) {
                 this.r = y.r;
                 this.r2 = y.r2;
             }
-            if(y.chi2){
+            if (y.chi2) {
                 this.chi2 = y.chi2;
             }
-        }
-        else{
+        } else {
             var n = x.length;
             if (n !== y.length) {
                 throw new RangeError('input and output array have a different length');
@@ -47,20 +46,20 @@ class SimpleLinearRegression extends BaseRegression {
             this.slope = numerator / (n * xSquared - xSum * xSum);
             this.intercept = (1 / n) * ySum - this.slope * (1 / n) * xSum;
             this.coefficients = [this.intercept, this.slope];
-            if(options.computeQuality){
-                this.quality = this.modelQuality(x,y);
+            if (options.computeQuality) {
+                this.quality = this.modelQuality(x, y);
             }
         }
 
     }
-    
+
     toJSON() {
         var out = {
-            name: "simpleLinearRegression",
+            name: 'simpleLinearRegression',
             slope: this.slope,
             intercept: this.intercept
-        }
-        if(this.quality){
+        };
+        if (this.quality) {
             out.quality = this.quality;
         }
 
@@ -69,11 +68,11 @@ class SimpleLinearRegression extends BaseRegression {
 
     _predict(input) {
         return this.slope * input + this.intercept;
-    };
+    }
 
     computeX(input) {
         return (input - this.intercept) / this.slope;
-    };
+    }
 
     toString(precision) {
         var result = 'y = ';
@@ -89,11 +88,11 @@ class SimpleLinearRegression extends BaseRegression {
             result += maybeToPrecision(this.intercept, precision);
         }
         return result;
-    };
+    }
 
     toLaTeX(precision) {
         return toString(precision);
-    };
+    }
 
     static load(json) {
         if (json.name !== 'simpleLinearRegression') {

@@ -15,14 +15,14 @@ for (var i = 0; i < nSamples; i++) {
 
 describe('Kernel ridge regression', function () {
     it('constant outputs', function () {
-        var model = new KernelRidgeRegression([[0, 0], [1,1]], [[0], [0]]);
-        Array.from(model.predict([[1,1], [2,5], [4,7]])).should.eql([[0], [0], [0]]);
+        var model = new KernelRidgeRegression([[0, 0], [1, 1]], [[0], [0]]);
+        Array.from(model.predict([[1, 1], [2, 5], [4, 7]])).should.eql([[0], [0], [0]]);
     });
     it('Polynomial kernel should overfit the pattern', function () {
         var model = new KernelRidgeRegression(Xs, Ys, {
             kernelType: 'polynomial',
             lambda: 0.0001,
-            kernelOptions: {degree: 2, constant:1}
+            kernelOptions: {degree: 2, constant: 1}
         });
         var Y = model.predict(Xs);
 

@@ -82,6 +82,6 @@ describe('Simple linear regression', function () {
         var outputs = [0, 1];
         (function () {
             new SLR(inputs, outputs);
-        }).should.throw(RangeError, {message: 'input and output array have a different length'})
+        }).should.throw(RangeError, {message: 'input and output array have a different length'});
     });
 });

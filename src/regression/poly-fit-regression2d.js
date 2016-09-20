@@ -1,7 +1,6 @@
-"use strict";
+'use strict';
 
-const Matrix = require("ml-matrix");
-const isInteger = require("is-integer");
+const Matrix = require('ml-matrix');
 const SVD = Matrix.DC.SingularValueDecomposition;
 const BaseRegression = require('./base-regression');
 
@@ -14,8 +13,9 @@ class PolynomialFitRegression2D extends BaseRegression {
     /**
      * Constructor for the 2D polynomial fitting
      *
-     * @param reload - for load purposes
-     * @param model - for load purposes
+     * @param inputs
+     * @param outputs
+     * @param options
      * @constructor
      */
     constructor(inputs, outputs, options) {
@@ -23,11 +23,11 @@ class PolynomialFitRegression2D extends BaseRegression {
         if (inputs === true) { // reloading model
             this.coefficients = Matrix.columnVector(outputs.coefficients);
             this.order = outputs.order;
-            if(outputs.r){
+            if (outputs.r) {
                 this.r = outputs.r;
                 this.r2 = outputs.r2;
             }
-            if(outputs.chi2){
+            if (outputs.chi2) {
                 this.chi2 = outputs.chi2;
             }
         } else {
@@ -36,11 +36,11 @@ class PolynomialFitRegression2D extends BaseRegression {
             this.coefficients = [];
             this.X = inputs;
             this.y = outputs;
-            
-            this.train(this.X,this.y,options);
 
-            if(options.computeQuality){
-                this.quality = this.modelQuality(inputs,outputs);
+            this.train(this.X, this.y, options);
+
+            if (options.computeQuality) {
+                this.quality = this.modelQuality(inputs, outputs);
             }
         }
     }
@@ -55,16 +55,16 @@ class PolynomialFitRegression2D extends BaseRegression {
      * @param options
      */
     train(X, y, options) {
-        if(!Matrix.isMatrix(X)) X = new Matrix(X);
-        if(!Matrix.isMatrix(y)) y = Matrix.columnVector(y);
-        
-        if(y.rows!=X.rows)//Perhaps y is transpose
+        if (!Matrix.isMatrix(X)) X = new Matrix(X);
+        if (!Matrix.isMatrix(y)) y = Matrix.columnVector(y);
+
+        if (y.rows !== X.rows)//Perhaps y is transpose
             y = y.transpose();
 
-        if(X.columns !== 2)
-            throw new RangeError("You give X with " + X.columns + " columns and it must be 2");
-        if(X.rows !== y.rows)
-            throw new RangeError("X and y must have the same rows");
+        if (X.columns !== 2)
+            throw new RangeError('You give X with ' + X.columns + ' columns and it must be 2');
+        if (X.rows !== y.rows)
+            throw new RangeError('X and y must have the same rows');
 
         var examples = X.rows;
         var coefficients = ((this.order + 2) * (this.order + 1)) / 2;
@@ -84,9 +84,9 @@ class PolynomialFitRegression2D extends BaseRegression {
         var A = new Matrix(examples, coefficients);
         var col = 0;
 
-        for(var i = 0; i <= this.order; ++i) {
+        for (var i = 0; i <= this.order; ++i) {
             var limit = this.order - i;
-            for(var j = 0; j <= limit; ++j) {
+            for (var j = 0; j <= limit; ++j) {
                 var result = powColVector(x1, i).mulColumnVector(powColVector(x2, j));
                 A.setColumn(col, result);
                 col++;
@@ -100,13 +100,13 @@ class PolynomialFitRegression2D extends BaseRegression {
         });
 
         var qqs = Matrix.rowVector(svd.diagonal);
-        qqs = qqs.apply(function(i, j) {
-            if(this[i][j] >= 1e-15) this[i][j] = 1 / this[i][j];
+        qqs = qqs.apply(function (i, j) {
+            if (this[i][j] >= 1e-15) this[i][j] = 1 / this[i][j];
             else this[i][j] = 0;
         });
 
         var qqs1 = Matrix.zeros(examples, coefficients);
-        for(i = 0; i < coefficients; ++i) {
+        for (i = 0; i < coefficients; ++i) {
             qqs1[i][i] = qqs[0][i];
         }
 
@@ -119,14 +119,14 @@ class PolynomialFitRegression2D extends BaseRegression {
 
         col = 0;
 
-        for(i = 0; i <= coefficients; ++i) {
+        for (i = 0; i <= coefficients; ++i) {
             limit = this.order - i;
-            for(j = 0; j <= limit; ++j) {
+            for (j = 0; j <= limit; ++j) {
                 this.coefficients[col][0] = (this.coefficients[col][0] * Math.pow(scaleX1, i) * Math.pow(scaleX2, j)) / scaleY;
                 col++;
             }
         }
-    };
+    }
 
     _predict(newInputs) {
         var x1 = newInputs[0];
@@ -135,9 +135,9 @@ class PolynomialFitRegression2D extends BaseRegression {
         var y = 0;
         var column = 0;
 
-        for(var i = 0; i <= this.order; i++) {
-            for(var j = 0; j <= this.order - i; j++) {
-                y+= Math.pow(x1, i)*(Math.pow(x2, j))*this.coefficients[column][0];
+        for (var i = 0; i <= this.order; i++) {
+            for (var j = 0; j <= this.order - i; j++) {
+                y += Math.pow(x1, i) * (Math.pow(x2, j)) * this.coefficients[column][0];
                 column++;
             }
         }
@@ -147,15 +147,15 @@ class PolynomialFitRegression2D extends BaseRegression {
 
     toJSON() {
         var out = {
-            name: "polyfit2D",
+            name: 'polyfit2D',
             order: this.order,
             coefficients: this.coefficients
         };
-        if(this.quality){
+        if (this.quality) {
             out.quality = this.quality;
         }
         return out;
-    };
+    }
 
     static load(json) {
         if (json.name !== 'polyfit2D') {
@@ -169,7 +169,6 @@ class PolynomialFitRegression2D extends BaseRegression {
 module.exports = PolynomialFitRegression2D;
 
 
-
 /**
  * Function that given a column vector return this: vector^power
  *
@@ -179,7 +178,7 @@ module.exports = PolynomialFitRegression2D;
  */
 function powColVector(x, power) {
     var result = x.clone();
-    for(var i = 0; i < x.rows; ++i) {
+    for (var i = 0; i < x.rows; ++i) {
         result[i][0] = Math.pow(result[i][0], power);
     }
     return result;

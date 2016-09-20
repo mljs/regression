@@ -14,10 +14,10 @@
 
 const maybeToPrecision = require('./util').maybeToPrecision;
 const BaseRegression = require('./base-regression');
-var Matrix = require("ml-matrix");
+const Matrix = require('ml-matrix');
 
 
-class PolynomialRegression extends BaseRegression{
+class PolynomialRegression extends BaseRegression {
     /**
      * @constructor
      * @param x: Independent variable
@@ -27,12 +27,12 @@ class PolynomialRegression extends BaseRegression{
      */
     constructor(x, y, M, options) {
         super();
-        let opt = options||{};
+        let opt = options || {};
         if (x === true) { // reloading model
-            this.coefficients = outputs.coefficients;
-            this.powers = outputs.powers;
-            this.M = outputs.M;
-            if(y.quality){
+            this.coefficients = options.coefficients;
+            this.powers = options.powers;
+            this.M = options.M;
+            if (y.quality) {
                 this.quality = y.quality;
             }
         } else {
@@ -40,26 +40,27 @@ class PolynomialRegression extends BaseRegression{
             if (n !== y.length) {
                 throw new RangeError('input and output array have a different length');
             }
-            if(Array.isArray(M)){
-                var powers = M;
+
+            let powers;
+            if (Array.isArray(M)) {
+                powers = M;
                 M = powers.length;
-            }
-            else{
+            } else {
                 M++;
-                var powers = new Array(M);
-                for( k = 0; k < M; k++) {
-                    powers[k]=k;
+                powers = new Array(M);
+                for (k = 0; k < M; k++) {
+                    powers[k] = k;
                 }
             }
             var F = new Matrix(n, M);
             var Y = new Matrix([y]);
-            var k,i;
-            for( k = 0; k < M; k++) {
-                for(i=0; i< n;i++){
-                    if(powers[k]==0)
-                        F[i][k]=1;
-                    else{
-                        F[i][k]=Math.pow(x[i],powers[k]);
+            var k, i;
+            for (k = 0; k < M; k++) {
+                for (i = 0; i < n; i++) {
+                    if (powers[k] === 0)
+                        F[i][k] = 1;
+                    else {
+                        F[i][k] = Math.pow(x[i], powers[k]);
                     }
                 }
             }
@@ -70,17 +71,17 @@ class PolynomialRegression extends BaseRegression{
 
             this.coefficients = A.solve(B).to1DArray();
             this.powers = powers;
-            this.M = M-1;
-            if(opt.computeQuality){
-                this.quality = this.modelQuality(x,y);
+            this.M = M - 1;
+            if (opt.computeQuality) {
+                this.quality = this.modelQuality(x, y);
             }
         }
     }
 
     _predict(x) {
-        var y =0;
-        for(var  k = 0; k < this.powers.length; k++) {
-            y+=this.coefficients[k]*Math.pow(x,this.powers[k]);
+        var y = 0;
+        for (var  k = 0; k < this.powers.length; k++) {
+            y += this.coefficients[k] * Math.pow(x, this.powers[k]);
         }
         return y;
     }
@@ -92,53 +93,53 @@ class PolynomialRegression extends BaseRegression{
             M: this.M
         };
 
-        if(this.quality){
+        if (this.quality) {
             out.quality = this.quality;
         }
         return out;
     }
 
-    toString(precision){
+    toString(precision) {
         return this._toFormula(precision, false);
     }
 
-    toLaTeX(precision){
+    toLaTeX(precision) {
         return this._toFormula(precision, true);
     }
 
-    _toFormula(precision, isLaTeX){
-        var sup = "^";
-        var closeSup = "";
-        var times = "*";
-        if(isLaTeX){
-            sup = "^{";
-            closeSup="}";
-            times="";
+    _toFormula(precision, isLaTeX) {
+        var sup = '^';
+        var closeSup = '';
+        var times = '*';
+        if (isLaTeX) {
+            sup = '^{';
+            closeSup = '}';
+            times = '';
         }
 
-        var fn =  "",str;
-        for(var  k = 0; k < this.coefficients.length ; k++) {
-            str="";
-            if(this.coefficients[k]!=0) {
-                if (this.powers[k] == 0)
+        var fn =  '', str;
+        for (var  k = 0; k < this.coefficients.length; k++) {
+            str = '';
+            if (this.coefficients[k] !== 0) {
+                if (this.powers[k] === 0)
                     str = maybeToPrecision(this.coefficients[k], precision);
                 else {
-                    if (this.powers[k] == 1)
-                        str = maybeToPrecision(this.coefficients[k], precision) + times +"x";
+                    if (this.powers[k] === 1)
+                        str = maybeToPrecision(this.coefficients[k], precision) + times + 'x';
                     else {
-                        str = maybeToPrecision(this.coefficients[k], precision) + times +"x" + sup + this.powers[k]+closeSup;
+                        str = maybeToPrecision(this.coefficients[k], precision) + times + 'x' + sup + this.powers[k] + closeSup;
                     }
                 }
                 if (this.coefficients[k] > 0)
-                    str= "+"+str;
+                    str = '+' + str;
             }
-            fn=str+fn;
+            fn = str + fn;
         }
-        if(fn.charAt(0)=='+'){
+        if (fn.charAt(0) === '+') {
             fn = fn.slice(1);
         }
 
-        return "y = "+fn;
+        return 'y = ' + fn;
     }
 
     static load(json) {
