@@ -65,6 +65,7 @@ describe('Simple linear regression', function () {
 
         var regression = new SLR(inputs, outputs);
 
+        regression.toLaTeX().should.equal('y = 2');
         regression.toString().should.equal('y = 2');
         regression.toString(1).should.equal('y = 2');
         regression.toString(5).should.equal('y = 2.0000');
@@ -83,5 +84,25 @@ describe('Simple linear regression', function () {
         (function () {
             new SLR(inputs, outputs);
         }).should.throw(RangeError, {message: 'input and output array have a different length'});
+    });
+    it('Load and export model', function () {
+        var regression = new SLR(true, {
+            name: 'simpleLinearRegression',
+            slope: 1,
+            intercept: 1,
+            quality: {
+                r: 1,
+                r2: 1,
+                chi2: 145.8,
+                rmsd: 0
+            }
+        });
+        regression.slope.should.equal(1);
+        regression.intercept.should.equal(1);
+
+        var model = regression.toJSON();
+        model.name.should.equal('simpleLinearRegression');
+        model.slope.should.equal(1);
+        model.intercept.should.equal(1);
     });
 });

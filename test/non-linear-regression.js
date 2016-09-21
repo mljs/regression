@@ -74,4 +74,98 @@ describe('Non-linear regression', function () {
         });
 
     });
+
+    describe('Load and export model ', function () {
+
+        it('Potential regression', function () {
+            var regression = new NLR.PotentialRegression(true, {
+                name: 'potentialRegression',
+                A: 1,
+                M: -1,
+                quality: {
+                    r: 1,
+                    r2: 1,
+                    chi2: 145.8,
+                    rmsd: 0
+                }
+            });
+            regression.A.should.equal(1);
+            regression.M.should.equal(-1);
+            regression.toLaTeX().should.equal('y = \\frac{1}{x^{1}}');
+
+            var model = regression.toJSON();
+            model.name.should.equal('potentialRegression');
+            model.A.should.equal(1);
+            model.M.should.equal(-1);
+        });
+
+        it('Exponential regresion', function () {
+            var regression = new NLR.ExpRegression(true, {
+                name: 'expRegression',
+                A: -1,
+                C: 1,
+                quality: {
+                    r: 1,
+                    r2: 1,
+                    chi2: 145.8,
+                    rmsd: 0
+                }
+            });
+            regression.A.should.equal(-1);
+            regression.C.should.equal(1);
+            regression.toLaTeX().should.equal('y = \\frac{1}{e^{1x}}');
+
+            var model = regression.toJSON();
+            model.name.should.equal('expRegression');
+            model.A.should.equal(-1);
+            model.C.should.equal(1);
+        });
+
+        it('Polynomial regression', function () {
+            var regression = new NLR.PolynomialRegression(true, {
+                name: 'polynomialRegression',
+                coefficients: -1,
+                powers: 1,
+                M: 1,
+                quality: {
+                    r: 1,
+                    r2: 1,
+                    chi2: 145.8,
+                    rmsd: 0
+                }
+            });
+            regression.coefficients.should.equal(-1);
+            regression.powers.should.equal(1);
+            regression.M.should.equal(1);
+
+            var model = regression.toJSON();
+            model.name.should.equal('polynomialRegression');
+            model.coefficients.should.equal(-1);
+            model.powers.should.equal(1);
+            model.M.should.equal(1);
+        });
+
+        it('Power regression', function () {
+            var regression = new NLR.PowerRegression(true, {
+                name: 'powerRegression',
+                A: 1,
+                B: -1,
+                quality: {
+                    r: 1,
+                    r2: 1,
+                    chi2: 145.8,
+                    rmsd: 0
+                }
+            });
+            regression.A.should.equal(1);
+            regression.B.should.equal(-1);
+            regression.toLaTeX().should.equal('y = \\frac{1}{x^{1}}');
+
+            var model = regression.toJSON();
+            model.name.should.equal('powerRegression');
+            model.A.should.equal(1);
+            model.B.should.equal(-1);
+        });
+
+    });
 });
