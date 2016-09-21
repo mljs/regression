@@ -12,12 +12,13 @@ class SimpleLinearRegression extends BaseRegression {
         if (x === true) {
             this.slope = y.slope;
             this.intercept = y.intercept;
-            if (y.r) {
-                this.r = y.r;
-                this.r2 = y.r2;
+            this.quality = y.quality || {};
+            if (y.quality.r) {
+                this.quality.r = y.quality.r;
+                this.quality.r2 = y.quality.r2;
             }
-            if (y.chi2) {
-                this.chi2 = y.chi2;
+            if (y.quality.chi2) {
+                this.quality.chi2 = y.quality.chi2;
             }
         } else {
             var n = x.length;
@@ -91,7 +92,7 @@ class SimpleLinearRegression extends BaseRegression {
     }
 
     toLaTeX(precision) {
-        return toString(precision);
+        return this.toString(precision);
     }
 
     static load(json) {
