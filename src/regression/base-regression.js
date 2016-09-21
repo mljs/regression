@@ -65,7 +65,12 @@ class BaseRegression {
 
         var r = (n * xY - xSum * ySum) / Math.sqrt((n * xSquared - xSum * xSum) * (n * ySquared - ySum * ySum));
 
-        return {r: r, r2: r * r, chi2: chi2, rmsd: rmsd * rmsd / n};
+        return {
+            r: r,
+            r2: r * r,
+            chi2: chi2,
+            rmsd: rmsd * rmsd / n
+        };
     }
 
 }

@@ -46,6 +46,6 @@
     "is-integer": "^1.0.6",
     "ml-kernel": "^2.0.0",
     "ml-matrix": "^2.0.0",
-    "ml-stat": "^1.1.0"
+    "ml-stat": "^1.3.3"
   }
 }
