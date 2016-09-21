@@ -1,3 +1,13 @@
+<a name="4.1.0"></a>
+# [4.1.0](https://github.com/mljs/regression/compare/v4.0.1...v4.1.0) (2016-09-21)
+
+
+### Features
+
+* **theil-sen-regression:** add Theil-Sen regression and his test ([69517b2](https://github.com/mljs/regression/commit/69517b2))
+
+
+
 <a name="4.0.1"></a>
 ## [4.0.1](https://github.com/mljs/regression/compare/v2.0.0...v4.0.1) (2016-08-16)
 
