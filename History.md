@@ -1,3 +1,13 @@
+<a name="4.1.1"></a>
+## [4.1.1](https://github.com/mljs/regression/compare/v4.1.0...v4.1.1) (2016-09-21)
+
+
+### Bug Fixes
+
+* increase test coverage ([#23](https://github.com/mljs/regression/issues/23)) ([1c806c5](https://github.com/mljs/regression/commit/1c806c5))
+
+
+
 <a name="4.1.0"></a>
 # [4.1.0](https://github.com/mljs/regression/compare/v4.0.1...v4.1.0) (2016-09-21)
 
