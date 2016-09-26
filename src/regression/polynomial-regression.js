@@ -108,9 +108,9 @@ class PolynomialRegression extends BaseRegression {
     }
 
     _toFormula(precision, isLaTeX) {
-        var sup = '^';
+        var sup = ' ^ ';
         var closeSup = '';
-        var times = '*';
+        var times = ' * ';
         if (isLaTeX) {
             sup = '^{';
             closeSup = '}';
@@ -118,28 +118,32 @@ class PolynomialRegression extends BaseRegression {
         }
 
         var fn =  '', str;
-        for (var  k = 0; k < this.coefficients.length; k++) {
+        for (var k = 0; k < this.coefficients.length; k++) {
             str = '';
             if (this.coefficients[k] !== 0) {
-                if (this.powers[k] === 0)
+                if (this.powers[k] === 0){
                     str = maybeToPrecision(this.coefficients[k], precision);
-                else {
-                    if (this.powers[k] === 1)
+                } else {
+                    if (this.powers[k] === 1) {
                         str = maybeToPrecision(this.coefficients[k], precision) + times + 'x';
-                    else {
+                    } else {
                         str = maybeToPrecision(this.coefficients[k], precision) + times + 'x' + sup + this.powers[k] + closeSup;
                     }
                 }
-                if (this.coefficients[k] > 0)
-                    str = '+' + str;
+
+                if (this.coefficients[k] > 0 && k !== (this.coefficients.length - 1)) {
+                    str = ' + ' + str;
+                } else if (k !== (this.coefficients.length - 1)) {
+                    str = ' ' + str;
+                }
             }
             fn = str + fn;
         }
-        if (fn.charAt(0) === '+') {
+        if (fn.charAt(0) === ' + ') {
             fn = fn.slice(1);
         }
 
-        return 'y = ' + fn;
+        return 'f(x) = ' + fn;
     }
 
     static load(json) {

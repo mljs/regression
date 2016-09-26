@@ -76,10 +76,10 @@ class SimpleLinearRegression extends BaseRegression {
     }
 
     toString(precision) {
-        var result = 'y = ';
+        var result = 'f(x) = ';
         if (this.slope) {
             var xFactor = maybeToPrecision(this.slope, precision);
-            result += (xFactor == 1 ? '' : xFactor) + 'x';
+            result += (xFactor == 1 ? '' : xFactor + ' * ') + 'x';
             if (this.intercept) {
                 var absIntercept = Math.abs(this.intercept);
                 var operator = absIntercept === this.intercept ? '+' : '-';

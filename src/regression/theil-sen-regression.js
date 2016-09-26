@@ -90,10 +90,10 @@ class TheilSenRegression extends BaseRegression {
     }
 
     toString(precision) {
-        var result = 'y = ';
+        var result = 'f(x) = ';
         if (this.slope) {
             var xFactor = maybeToPrecision(this.slope, precision);
-            result += (Math.abs(xFactor - 1) < 1e-5 ? '' : xFactor) + 'x';
+            result += (Math.abs(xFactor - 1) < 1e-5 ? '' : xFactor + ' * ') + 'x';
             if (this.intercept) {
                 var absIntercept = Math.abs(this.intercept);
                 var operator = absIntercept === this.intercept ? '+' : '-';

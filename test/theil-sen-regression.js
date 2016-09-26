@@ -20,8 +20,8 @@ describe('Theil-Sen regression', function () {
         regression.computeX(y).should.be.approximately(85, 1e-5);
         y.should.be.approximately(86, 1e-5);
 
-        regression.toString(3).should.equal('y = x + 1.00');
-        regression.toLaTeX(3).should.equal('y = x + 1.00');
+        regression.toString(3).should.equal('f(x) = x + 1.00');
+        regression.toLaTeX(3).should.equal('f(x) = x + 1.00');
     });
     it('Outlier', function () {
         // outlier in the 4th value
@@ -39,9 +39,9 @@ describe('Theil-Sen regression', function () {
 
         var regression = new TheilSenRegression(inputs, outputs);
 
-        regression.toString().should.equal('y = 2');
-        regression.toString(1).should.equal('y = 2');
-        regression.toString(5).should.equal('y = 2.0000');
+        regression.toString().should.equal('f(x) = 2');
+        regression.toString(1).should.equal('f(x) = 2');
+        regression.toString(5).should.equal('f(x) = 2.0000');
     });
     it('different size on input and output', function () {
         var inputs = [0, 1, 2];

@@ -20,7 +20,7 @@ describe('Simple linear regression', function () {
         regression.computeX(y).should.equal(85);
         y.should.be.approximately(28.088235294117649, 1e-10);
 
-        regression.toString(3).should.equal('y = -0.265x + 50.6');
+        regression.toString(3).should.equal('f(x) = - 0.265 * x + 50.6');
     });
     it('SLR2', function () {
         // example from https://en.wikipedia.org/wiki/Simple_linear_regression#Numerical_example
@@ -57,7 +57,7 @@ describe('Simple linear regression', function () {
         regression.quality.chi2.should.equal(0);
         regression.quality.rmsd.should.equal(0);
 
-        regression.toString(3).should.equal('y = -2.00x + 10.0');
+        regression.toString(3).should.equal('f(x) = - 2.00 * x + 10.0');
     });
     it('SLR constant', function () {
         var inputs = [0, 1, 2, 3];
@@ -65,10 +65,10 @@ describe('Simple linear regression', function () {
 
         var regression = new SLR(inputs, outputs);
 
-        regression.toLaTeX().should.equal('y = 2');
-        regression.toString().should.equal('y = 2');
-        regression.toString(1).should.equal('y = 2');
-        regression.toString(5).should.equal('y = 2.0000');
+        regression.toLaTeX().should.equal('f(x) = 2');
+        regression.toString().should.equal('f(x) = 2');
+        regression.toString(1).should.equal('f(x) = 2');
+        regression.toString(5).should.equal('f(x) = 2.0000');
     });
     it('negative intercept and slope', function () {
         var inputs = [-1, 0, 1];
@@ -76,7 +76,7 @@ describe('Simple linear regression', function () {
 
         var regression = new SLR(inputs, outputs);
 
-        regression.toString().should.equal('y = x - 1');
+        regression.toString().should.equal('f(x) = x - 1');
     });
     it('different size on input and output', function () {
         var inputs = [0, 1, 2];
