@@ -146,7 +146,7 @@ class PolynomialRegression extends BaseRegression {
         return 'f(x) = ' + fn;
     }
 
-    static load(json) {
+    static load /* istanbul ignore next */ (json) {
         if (json.name !== 'polynomialRegression') {
             throw new TypeError('not a polynomial regression model');
         }

@@ -11,24 +11,25 @@ class BaseRegression {
         } else if (Number.isFinite(x)) {
             y2 = this._predict(x);
         } else {
+            /* istanbul ignore next */
             throw new TypeError('x must be a number or array');
         }
         return y2;
     }
 
-    _predict(x) {
+    _predict /* istanbul ignore next */ (x) {
         throw new Error('_compute not implemented');
     }
 
-    train(options) {
+    train /* istanbul ignore next */ (options) {
         //Do nothing for this package
     }
 
-    toString(precision) {
+    toString /* istanbul ignore next */ (precision) {
         return '';
     }
 
-    toLaTeX(precision) {
+    toLaTeX /* istanbul ignore next */ (precision) {
         return '';
     }
 

@@ -95,7 +95,7 @@ class SimpleLinearRegression extends BaseRegression {
         return this.toString(precision);
     }
 
-    static load(json) {
+    static load /* istanbul ignore next */ (json) {
         if (json.name !== 'simpleLinearRegression') {
             throw new TypeError('not a SLR model');
         }

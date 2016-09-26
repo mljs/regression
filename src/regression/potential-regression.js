@@ -71,7 +71,7 @@ class PotentialRegression extends BaseRegression {
             return 'f(x) = \\frac{' + maybeToPrecision(this.A, precision) + '}{x^{' + (-this.M) + '}}';
     }
 
-    static load(json) {
+    static load /* istanbul ignore next */ (json) {
         if (json.name !== 'potentialRegression') {
             throw new TypeError('not a potential regression model');
         }

@@ -109,7 +109,7 @@ class TheilSenRegression extends BaseRegression {
         return this.toString(precision);
     }
 
-    static load(json) {
+    static load /* istanbul ignore next */ (json) {
         if (json.name !== 'TheilSenRegression') {
             throw new TypeError('not a Theil-Sen model');
         }
