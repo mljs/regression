@@ -63,7 +63,7 @@ class PowerRegression extends BaseRegression {
     }
 
     toString(precision) {
-        return 'f(x) = ' + maybeToPrecision(this.A, precision) + ' * x ^ ' + maybeToPrecision(this.B, precision);
+        return 'f(x) = ' + maybeToPrecision(this.A, precision) + ' * x^' + maybeToPrecision(this.B, precision);
     }
 
     toLaTeX(precision) {
@@ -73,7 +73,7 @@ class PowerRegression extends BaseRegression {
             return 'f(x) = \\frac{' + maybeToPrecision(this.A, precision) + '}{x^{' + maybeToPrecision(-this.B, precision) + '}}';
     }
 
-    static load /* istanbul ignore next */ (json) {
+    static load(json) {
         if (json.name !== 'powerRegression') {
             throw new TypeError('not a power regression model');
         }

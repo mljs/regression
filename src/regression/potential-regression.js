@@ -60,7 +60,7 @@ class PotentialRegression extends BaseRegression {
     }
 
     toString(precision) {
-        return 'f(x) = ' + maybeToPrecision(this.A, precision) + ' * x ^ ' + this.M;
+        return 'f(x) = ' + maybeToPrecision(this.A, precision) + ' * x^' + this.M;
     }
 
     toLaTeX(precision) {
@@ -71,11 +71,11 @@ class PotentialRegression extends BaseRegression {
             return 'f(x) = \\frac{' + maybeToPrecision(this.A, precision) + '}{x^{' + (-this.M) + '}}';
     }
 
-    static load /* istanbul ignore next */ (json) {
+    static load(json) {
         if (json.name !== 'potentialRegression') {
             throw new TypeError('not a potential regression model');
         }
-        return new PowerRegression(true, json);
+        return new PotentialRegression(true, json);
     }
 }
 

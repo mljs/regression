@@ -1,6 +1,6 @@
 'use strict';
 
-var SLR = require('../src/index.js').SLR;
+var SLR = require('..').SLR;
 
 describe('Simple linear regression', function () {
     it('SLR1', function () {
@@ -86,7 +86,7 @@ describe('Simple linear regression', function () {
         }).should.throw(RangeError, {message: 'input and output array have a different length'});
     });
     it('Load and export model', function () {
-        var regression = new SLR(true, {
+        var regression = SLR.load({
             name: 'simpleLinearRegression',
             slope: 1,
             intercept: 1,

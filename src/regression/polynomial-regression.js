@@ -108,7 +108,7 @@ class PolynomialRegression extends BaseRegression {
     }
 
     _toFormula(precision, isLaTeX) {
-        var sup = ' ^ ';
+        var sup = '^';
         var closeSup = '';
         var times = ' * ';
         if (isLaTeX) {
@@ -121,7 +121,7 @@ class PolynomialRegression extends BaseRegression {
         for (var k = 0; k < this.coefficients.length; k++) {
             str = '';
             if (this.coefficients[k] !== 0) {
-                if (this.powers[k] === 0){
+                if (this.powers[k] === 0) {
                     str = maybeToPrecision(this.coefficients[k], precision);
                 } else {
                     if (this.powers[k] === 1) {
@@ -146,7 +146,7 @@ class PolynomialRegression extends BaseRegression {
         return 'f(x) = ' + fn;
     }
 
-    static load /* istanbul ignore next */ (json) {
+    static load(json) {
         if (json.name !== 'polynomialRegression') {
             throw new TypeError('not a polynomial regression model');
         }

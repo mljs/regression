@@ -1,6 +1,6 @@
 'use strict';
 
-var NLR = require('../src/index.js').NLR;
+var NLR = require('..').NLR;
 
 describe('Non-linear regression', function () {
 
@@ -15,7 +15,7 @@ describe('Non-linear regression', function () {
             result.quality.r2.should.greaterThan(0.8);
             result.quality.chi2.should.lessThan(0.1);
             result.quality.rmsd.should.lessThan(0.01);
-            result.toString(4).should.equal('f(x) = 4.907 * x ^ 2');
+            result.toString(4).should.equal('f(x) = 4.907 * x^2');
             result.toLaTeX(4).should.equal('f(x) = 4.907x^{2}');
         });
 
@@ -45,7 +45,7 @@ describe('Non-linear regression', function () {
             result.quality.r2.should.greaterThan(0.8);
             result.quality.chi2.should.lessThan(0.1);
             result.quality.rmsd.should.lessThan(0.01);
-            result.toString(4).should.equal('f(x) = 0.1785 * x ^ 2 - 0.1925 * x + 0.8505');
+            result.toString(4).should.equal('f(x) = 0.1785 * x^2 - 0.1925 * x + 0.8505');
             result.toLaTeX(4).should.equal('f(x) = 0.1785x^{2} - 0.1925x + 0.8505');
         });
 
@@ -68,7 +68,7 @@ describe('Non-linear regression', function () {
             result.quality.r2.should.greaterThan(0.8);
             result.quality.chi2.should.lessThan(0.1);
             result.quality.rmsd.should.lessThan(0.01);
-            result.toString(4).should.equal('f(x) = 24.13 * x ^ 0.6595');
+            result.toString(4).should.equal('f(x) = 24.13 * x^0.6595');
             result.toLaTeX(4).should.equal('f(x) = 24.13x^{0.6595}');
 
         });
@@ -78,7 +78,7 @@ describe('Non-linear regression', function () {
     describe('Load and export model ', function () {
 
         it('Potential regression', function () {
-            var regression = new NLR.PotentialRegression(true, {
+            var regression = NLR.PotentialRegression.load({
                 name: 'potentialRegression',
                 A: 1,
                 M: -1,
@@ -100,7 +100,7 @@ describe('Non-linear regression', function () {
         });
 
         it('Exponential regresion', function () {
-            var regression = new NLR.ExpRegression(true, {
+            var regression = NLR.ExpRegression.load({
                 name: 'expRegression',
                 A: -1,
                 C: 1,
@@ -122,7 +122,7 @@ describe('Non-linear regression', function () {
         });
 
         it('Polynomial regression', function () {
-            var regression = new NLR.PolynomialRegression(true, {
+            var regression = NLR.PolynomialRegression.load({
                 name: 'polynomialRegression',
                 coefficients: -1,
                 powers: 1,
@@ -146,7 +146,7 @@ describe('Non-linear regression', function () {
         });
 
         it('Power regression', function () {
-            var regression = new NLR.PowerRegression(true, {
+            var regression = NLR.PowerRegression.load({
                 name: 'powerRegression',
                 A: 1,
                 B: -1,

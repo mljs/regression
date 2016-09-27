@@ -157,7 +157,7 @@ class PolynomialFitRegression2D extends BaseRegression {
         return out;
     }
 
-    static load /* istanbul ignore next */ (json) {
+    static load(json) {
         if (json.name !== 'polyfit2D') {
             throw new TypeError('not a polyfit2D model');
         }

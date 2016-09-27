@@ -26,14 +26,7 @@ class TheilSenRegression extends BaseRegression {
             // loads the model
             this.slope = y.slope;
             this.intercept = y.intercept;
-            this.quality = y.quality || {};
-            if (y.quality.r) {
-                this.quality.r = y.quality.r;
-                this.quality.r2 = y.quality.r2;
-            }
-            if (y.quality.chi2) {
-                this.quality.chi2 = y.quality.chi2;
-            }
+            this.quality = Object.assign({}, y.quality, this.quality);
         } else {
             // creates the model
             let len = x.length;
@@ -109,7 +102,7 @@ class TheilSenRegression extends BaseRegression {
         return this.toString(precision);
     }
 
-    static load /* istanbul ignore next */ (json) {
+    static load(json) {
         if (json.name !== 'TheilSenRegression') {
             throw new TypeError('not a Theil-Sen model');
         }

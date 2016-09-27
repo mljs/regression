@@ -74,7 +74,7 @@ class ExpRegression extends BaseRegression {
 
     }
 
-    static load /* istanbul ignore next */ (json) {
+    static load(json) {
         if (json.name !== 'expRegression') {
             throw new TypeError('not a exp regression model');
         }
