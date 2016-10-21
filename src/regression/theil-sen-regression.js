@@ -4,19 +4,14 @@ const BaseRegression = require('./base-regression');
 const maybeToPrecision = require('./util').maybeToPrecision;
 const median = require('ml-stat/array').median;
 
-/**
- * Theil–Sen estimator
- *
- * https://en.wikipedia.org/wiki/Theil%E2%80%93Sen_estimator
- * @class
- */
 class TheilSenRegression extends BaseRegression {
 
     /**
-     *
-     * @param x
-     * @param y
-     * @param options
+     * Theil–Sen estimator
+     * https://en.wikipedia.org/wiki/Theil%E2%80%93Sen_estimator
+     * @param {Array<number>} x
+     * @param {Array<number>} y
+     * @param {object} options
      * @constructor
      */
     constructor(x, y, options) {

@@ -16,27 +16,27 @@ class BaseRegression {
         return y2;
     }
 
-    _predict(x) {
+    _predict() {
         throw new Error('_compute not implemented');
     }
 
-    train(options) {
+    train() {
         //Do nothing for this package
     }
 
-    toString(precision) {
+    toString() {
         return '';
     }
 
-    toLaTeX(precision) {
+    toLaTeX() {
         return '';
     }
 
     /**
      * Return the correlation coefficient of determination (r) and chi-square.
-     * @param x
-     * @param y
-     * @returns {object}
+     * @param {Array<number>} x
+     * @param {Array<number>} y
+     * @return {object}
      */
     modelQuality(x, y) {
         let n = x.length;
@@ -58,8 +58,9 @@ class BaseRegression {
             xSquared += y2[i] * y2[i];
             ySquared += y[i] * y[i];
             xY += y2[i] * y[i];
-            if (y[i] !== 0)
+            if (y[i] !== 0) {
                 chi2 += (y[i] - y2[i]) * (y[i] - y2[i]) / y[i];
+            }
             rmsd = (y[i] - y2[i]) * (y[i] - y2[i]);
         }
 

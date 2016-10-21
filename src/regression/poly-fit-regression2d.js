@@ -50,21 +50,24 @@ class PolynomialFitRegression2D extends BaseRegression {
      * The third argument is an object with the following options:
      * * order: order of the polynomial to fit.
      *
-     * @param X - A matrix with n rows and 2 columns.
-     * @param y - A vector of the prediction values.
-     * @param options
+     * @param {Matrix} X - A matrix with n rows and 2 columns.
+     * @param {Matrix} y - A vector of the prediction values.
      */
-    train(X, y, options) {
+    train(X, y) {
         if (!Matrix.isMatrix(X)) X = new Matrix(X);
         if (!Matrix.isMatrix(y)) y = Matrix.columnVector(y);
 
-        if (y.rows !== X.rows)//Perhaps y is transpose
+        //Perhaps y is transpose
+        if (y.rows !== X.rows) {
             y = y.transpose();
+        }
 
-        if (X.columns !== 2)
+        if (X.columns !== 2) {
             throw new RangeError('You give X with ' + X.columns + ' columns and it must be 2');
-        if (X.rows !== y.rows)
+        }
+        if (X.rows !== y.rows) {
             throw new RangeError('X and y must have the same rows');
+        }
 
         var examples = X.rows;
         var coefficients = ((this.order + 2) * (this.order + 1)) / 2;
@@ -174,7 +177,7 @@ module.exports = PolynomialFitRegression2D;
  *
  * @param x - Column vector.
  * @param power - Pow number.
- * @returns {Suite|Matrix}
+ * @return {Suite|Matrix}
  */
 function powColVector(x, power) {
     var result = x.clone();

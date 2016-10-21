@@ -13,7 +13,7 @@
 
 const maybeToPrecision = require('./util').maybeToPrecision;
 const PolynomialRegression = require('./polynomial-regression');
-const PowerRegression = require('./power-regression');
+// const PowerRegression = require('./power-regression');
 const BaseRegression = require('./base-regression');
 
 class PotentialRegression extends BaseRegression {
@@ -21,6 +21,7 @@ class PotentialRegression extends BaseRegression {
      * @constructor
      * @param x: Independent variable
      * @param y: Dependent variable
+     * @param M
      * @param options
      */
     constructor(x, y, M, options) {
@@ -65,10 +66,11 @@ class PotentialRegression extends BaseRegression {
 
     toLaTeX(precision) {
 
-        if (this.M >= 0)
+        if (this.M >= 0) {
             return 'f(x) = ' + maybeToPrecision(this.A, precision) + 'x^{' + this.M + '}';
-        else
+        } else {
             return 'f(x) = \\frac{' + maybeToPrecision(this.A, precision) + '}{x^{' + (-this.M) + '}}';
+        }
     }
 
     static load(json) {

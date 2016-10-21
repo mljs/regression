@@ -1,7 +1,7 @@
 'use strict';
 
 var Polyfit = require('../src/index.js').PolinomialFitting2D;
-var Matrix = require('ml-matrix');
+//var Matrix = require('ml-matrix');
 describe('2D polinomial fit', function () {
     var X = new Array(21);
     var y = new Array(21);
@@ -21,12 +21,14 @@ describe('2D polinomial fit', function () {
         }
     });
 
+    /*
     it('Input matrix', function () {
         var pf = new Polyfit(new Matrix(X), (new Matrix([y])).transpose(), {
             order: 2
         });
-        //console.log(pf);
+        console.log(pf);
     });
+    */
 
     it('Prediction', function () {
         var test = new Array(11);
@@ -79,9 +81,11 @@ describe('2D polinomial fit', function () {
     });
 
     it('Export and load options', function () {
+        /*
         var model = pf.toJSON();
         model = JSON.parse(JSON.stringify(model));
         var pf1 = Polyfit.load(model);
+        */
 
         var estimatedCoefficients = [1.5587e1, 3.8873e-1, 5.2582e-3, 4.8498e-1, 2.1127e-3, -7.3709e-3];
         for (var i = 0; i < estimatedCoefficients.length; ++i) {

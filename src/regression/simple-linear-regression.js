@@ -30,14 +30,12 @@ class SimpleLinearRegression extends BaseRegression {
             var ySum = 0;
 
             var xSquared = 0;
-            var ySquared = 0;
             var xY = 0;
 
             for (var i = 0; i < n; i++) {
                 xSum += x[i];
                 ySum += y[i];
                 xSquared += x[i] * x[i];
-                ySquared += y[i] * y[i];
                 xY += x[i] * y[i];
             }
 
@@ -79,7 +77,7 @@ class SimpleLinearRegression extends BaseRegression {
         var result = 'f(x) = ';
         if (this.slope) {
             var xFactor = maybeToPrecision(this.slope, precision);
-            result += (xFactor == 1 ? '' : xFactor + ' * ') + 'x';
+            result += (Math.abs(xFactor - 1) < 1e-5 ? '' : xFactor + ' * ') + 'x';
             if (this.intercept) {
                 var absIntercept = Math.abs(this.intercept);
                 var operator = absIntercept === this.intercept ? '+' : '-';

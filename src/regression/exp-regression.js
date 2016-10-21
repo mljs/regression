@@ -18,9 +18,9 @@ const BaseRegression = require('./base-regression');
 class ExpRegression extends BaseRegression {
     /**
      * @constructor
-     * @param x: Independent variable
-     * @param y: Dependent variable
-     * @param options
+     * @param {Array<number>} x - Independent variable
+     * @param {Array<number>} y - Dependent variable
+     * @param {object} options
      */
     constructor(x, y, options) {
         super();
@@ -67,10 +67,11 @@ class ExpRegression extends BaseRegression {
     }
 
     toLaTeX(precision) {
-        if (this.A >= 0)
+        if (this.A >= 0) {
             return 'f(x) = ' + maybeToPrecision(this.C, precision) + 'e^{' + maybeToPrecision(this.A, precision) + 'x}';
-        else
+        } else {
             return 'f(x) = \\frac{' + maybeToPrecision(this.C, precision) + '}{e^{' + maybeToPrecision(-this.A, precision) + 'x}}';
+        }
 
     }
 

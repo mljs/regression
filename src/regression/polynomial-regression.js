@@ -57,9 +57,9 @@ class PolynomialRegression extends BaseRegression {
             var k, i;
             for (k = 0; k < M; k++) {
                 for (i = 0; i < n; i++) {
-                    if (powers[k] === 0)
+                    if (powers[k] === 0) {
                         F[i][k] = 1;
-                    else {
+                    } else {
                         F[i][k] = Math.pow(x[i], powers[k]);
                     }
                 }
