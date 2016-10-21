@@ -13,7 +13,7 @@
 
 const maybeToPrecision = require('./util').maybeToPrecision;
 const PolynomialRegression = require('./polynomial-regression');
-const PowerRegression = require('./power-regression');
+// const PowerRegression = require('./power-regression');
 const BaseRegression = require('./base-regression');
 
 class PotentialRegression extends BaseRegression {
@@ -21,6 +21,7 @@ class PotentialRegression extends BaseRegression {
      * @constructor
      * @param x: Independent variable
      * @param y: Dependent variable
+     * @param M
      * @param options
      */
     constructor(x, y, M, options) {
@@ -60,22 +61,23 @@ class PotentialRegression extends BaseRegression {
     }
 
     toString(precision) {
-        return 'y = ' + maybeToPrecision(this.A, precision) + '*x^' + this.M;
+        return 'f(x) = ' + maybeToPrecision(this.A, precision) + ' * x^' + this.M;
     }
 
     toLaTeX(precision) {
 
-        if (this.M >= 0)
-            return 'y = ' + maybeToPrecision(this.A, precision) + 'x^{' + this.M + '}';
-        else
-            return 'y = \\frac{' + maybeToPrecision(this.A, precision) + '}{x^{' + (-this.M) + '}}';
+        if (this.M >= 0) {
+            return 'f(x) = ' + maybeToPrecision(this.A, precision) + 'x^{' + this.M + '}';
+        } else {
+            return 'f(x) = \\frac{' + maybeToPrecision(this.A, precision) + '}{x^{' + (-this.M) + '}}';
+        }
     }
 
     static load(json) {
         if (json.name !== 'potentialRegression') {
             throw new TypeError('not a potential regression model');
         }
-        return new PowerRegression(true, json);
+        return new PotentialRegression(true, json);
     }
 }
 

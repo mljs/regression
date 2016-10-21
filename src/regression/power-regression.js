@@ -63,14 +63,15 @@ class PowerRegression extends BaseRegression {
     }
 
     toString(precision) {
-        return 'y = ' + maybeToPrecision(this.A, precision) + '*x^' + maybeToPrecision(this.B, precision);
+        return 'f(x) = ' + maybeToPrecision(this.A, precision) + ' * x^' + maybeToPrecision(this.B, precision);
     }
 
     toLaTeX(precision) {
-        if (this.B >= 0)
-            return 'y = ' + maybeToPrecision(this.A, precision) + 'x^{' + maybeToPrecision(this.B, precision) + '}';
-        else
-            return 'y = \\frac{' + maybeToPrecision(this.A, precision) + '}{x^{' + maybeToPrecision(-this.B, precision) + '}}';
+        if (this.B >= 0) {
+            return 'f(x) = ' + maybeToPrecision(this.A, precision) + 'x^{' + maybeToPrecision(this.B, precision) + '}';
+        } else {
+            return 'f(x) = \\frac{' + maybeToPrecision(this.A, precision) + '}{x^{' + maybeToPrecision(-this.B, precision) + '}}';
+        }
     }
 
     static load(json) {

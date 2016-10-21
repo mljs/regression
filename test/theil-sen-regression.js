@@ -1,6 +1,6 @@
 'use strict';
 
-var TheilSenRegression = require('../src/index.js').TheilSenRegression;
+const TheilSenRegression = require('..').TheilSenRegression;
 
 describe('Theil-Sen regression', function () {
     it('Simple case', function () {
@@ -20,8 +20,9 @@ describe('Theil-Sen regression', function () {
         regression.computeX(y).should.be.approximately(85, 1e-5);
         y.should.be.approximately(86, 1e-5);
 
-        regression.toString(3).should.equal('y = x + 1.00');
-        regression.toLaTeX(3).should.equal('y = x + 1.00');
+        regression.toString(3).should.equal('f(x) = x + 1.00');
+        regression.toLaTeX(3).should.equal('f(x) = x + 1.00');
+        regression.toJSON().slope.should.equal(1);
     });
     it('Outlier', function () {
         // outlier in the 4th value
@@ -39,9 +40,9 @@ describe('Theil-Sen regression', function () {
 
         var regression = new TheilSenRegression(inputs, outputs);
 
-        regression.toString().should.equal('y = 2');
-        regression.toString(1).should.equal('y = 2');
-        regression.toString(5).should.equal('y = 2.0000');
+        regression.toString().should.equal('f(x) = 2');
+        regression.toString(1).should.equal('f(x) = 2');
+        regression.toString(5).should.equal('f(x) = 2.0000');
     });
     it('different size on input and output', function () {
         var inputs = [0, 1, 2];
@@ -51,10 +52,10 @@ describe('Theil-Sen regression', function () {
         }).should.throw(RangeError, {message: 'Input and output array have a different length'});
     });
     it('Load and export model', function () {
-        var regression = new TheilSenRegression(true, {
+        var regression = TheilSenRegression.load({
             name: 'TheilSenRegression',
-            slope: 1,
-            intercept: 1,
+            slope: -1,
+            intercept: 0,
             quality: {
                 r: 1,
                 r2: 1,
@@ -62,12 +63,22 @@ describe('Theil-Sen regression', function () {
                 rmsd: 0
             }
         });
-        regression.slope.should.equal(1);
-        regression.intercept.should.equal(1);
+        regression.slope.should.equal(-1);
+        regression.intercept.should.equal(0);
+        regression.toString().should.equal('f(x) = - 1 * x');
 
         var model = regression.toJSON();
         model.name.should.equal('TheilSenRegression');
-        model.slope.should.equal(1);
-        model.intercept.should.equal(1);
+        model.slope.should.equal(-1);
+        model.intercept.should.equal(0);
+        model.quality.r.should.equal(1);
+
+        TheilSenRegression.load.bind(null, {name: 1}).should.throw('not a Theil-Sen model');
+        var noQuality = TheilSenRegression.load({
+            name: 'TheilSenRegression',
+            slope: -1,
+            intercept: 1
+        });
+        noQuality.quality.should.deepEqual({});
     });
 });

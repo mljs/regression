@@ -4,19 +4,14 @@ const BaseRegression = require('./base-regression');
 const maybeToPrecision = require('./util').maybeToPrecision;
 const median = require('ml-stat/array').median;
 
-/**
- * Theil–Sen estimator
- *
- * https://en.wikipedia.org/wiki/Theil%E2%80%93Sen_estimator
- * @class
- */
 class TheilSenRegression extends BaseRegression {
 
     /**
-     *
-     * @param x
-     * @param y
-     * @param options
+     * Theil–Sen estimator
+     * https://en.wikipedia.org/wiki/Theil%E2%80%93Sen_estimator
+     * @param {Array<number>} x
+     * @param {Array<number>} y
+     * @param {object} options
      * @constructor
      */
     constructor(x, y, options) {
@@ -26,14 +21,7 @@ class TheilSenRegression extends BaseRegression {
             // loads the model
             this.slope = y.slope;
             this.intercept = y.intercept;
-            this.quality = y.quality || {};
-            if (y.quality.r) {
-                this.quality.r = y.quality.r;
-                this.quality.r2 = y.quality.r2;
-            }
-            if (y.quality.chi2) {
-                this.quality.chi2 = y.quality.chi2;
-            }
+            this.quality = Object.assign({}, y.quality, this.quality);
         } else {
             // creates the model
             let len = x.length;
@@ -90,10 +78,10 @@ class TheilSenRegression extends BaseRegression {
     }
 
     toString(precision) {
-        var result = 'y = ';
+        var result = 'f(x) = ';
         if (this.slope) {
             var xFactor = maybeToPrecision(this.slope, precision);
-            result += (Math.abs(xFactor - 1) < 1e-5 ? '' : xFactor) + 'x';
+            result += (Math.abs(xFactor - 1) < 1e-5 ? '' : xFactor + ' * ') + 'x';
             if (this.intercept) {
                 var absIntercept = Math.abs(this.intercept);
                 var operator = absIntercept === this.intercept ? '+' : '-';
