@@ -1,6 +1,8 @@
 'use strict';
 
-const Matrix = require('ml-matrix').Matrix;
+const matrixLib = require('ml-matrix');
+const Matrix = matrixLib.Matrix;
+const solve = matrixLib.solve;
 const Kernel = require('ml-kernel');
 
 const BaseRegression = require('./base-regression');
@@ -35,7 +37,7 @@ class KernelRidgeRegression extends BaseRegression {
             const n = inputs.length;
             K.add(Matrix.eye(n, n).mul(options.lambda));
 
-            this.alpha = K.solve(outputs);
+            this.alpha = solve(K, outputs);
             this.inputs = inputs;
             this.kernelType = options.kernelType;
             this.kernelOptions = options.kernelOptions;
