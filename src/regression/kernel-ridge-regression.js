@@ -1,6 +1,6 @@
 'use strict';
 
-const Matrix = require('ml-matrix');
+const Matrix = require('ml-matrix').Matrix;
 const Kernel = require('ml-kernel');
 
 const BaseRegression = require('./base-regression');

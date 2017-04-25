@@ -14,8 +14,9 @@
 
 const maybeToPrecision = require('./util').maybeToPrecision;
 const BaseRegression = require('./base-regression');
-const Matrix = require('ml-matrix');
-
+const matrixLib = require('ml-matrix');
+const Matrix = matrixLib.Matrix;
+const solve = matrixLib.solve;
 
 class PolynomialRegression extends BaseRegression {
     /**
@@ -69,7 +70,7 @@ class PolynomialRegression extends BaseRegression {
             var A = FT.mmul(F);
             var B = FT.mmul(Y.transposeView());
 
-            this.coefficients = A.solve(B).to1DArray();
+            this.coefficients = solve(A, B).to1DArray();
             this.powers = powers;
             this.M = M - 1;
             if (opt.computeQuality) {

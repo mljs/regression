@@ -1,7 +1,8 @@
 'use strict';
 
-const Matrix = require('ml-matrix');
-const SVD = Matrix.DC.SingularValueDecomposition;
+const matrixLib = require('ml-matrix');
+const Matrix = matrixLib.Matrix;
+const SVD = matrixLib.SVD;
 const BaseRegression = require('./base-regression');
 
 const defaultOptions = {
