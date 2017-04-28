@@ -12,7 +12,7 @@
  */
 
 const maybeToPrecision = require('./util').maybeToPrecision;
-const SimpleLinearRegression = require('./simple-linear-regression');
+const SimpleLinearRegression = require('ml-regression-simple-linear');
 const BaseRegression = require('./base-regression');
 
 class ExpRegression extends BaseRegression {
