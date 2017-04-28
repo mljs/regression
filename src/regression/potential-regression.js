@@ -12,7 +12,7 @@
  */
 
 const maybeToPrecision = require('./util').maybeToPrecision;
-const PolynomialRegression = require('./polynomial-regression');
+const PolynomialRegression = require('ml-regression-polynomial');
 // const PowerRegression = require('./power-regression');
 const BaseRegression = require('./base-regression');
 
@@ -39,7 +39,7 @@ class PotentialRegression extends BaseRegression {
                 throw new RangeError('input and output array have a different length');
             }
 
-            var linear = new PolynomialRegression(x, y, [M], {computeCoefficient: true});
+            var linear = new PolynomialRegression(x, y, [M]);
             this.A = linear.coefficients[0];
             this.M = M;
             if (opt.computeQuality) {

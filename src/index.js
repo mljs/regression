@@ -1,9 +1,9 @@
 'use strict';
 
 exports.SimpleLinearRegression = exports.SLR = require('ml-regression-simple-linear');
+exports.PolynomialRegression = require('ml-regression-polynomial');
 
 exports.NonLinearRegression = exports.NLR = {
-    PolynomialRegression: require('./regression/polynomial-regression'),
     PotentialRegression: require('./regression/potential-regression'),
     ExpRegression: require('./regression/exp-regression'),
     PowerRegression: require('./regression/power-regression')

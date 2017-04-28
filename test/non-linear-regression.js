@@ -32,23 +32,6 @@ describe('Non-linear regression', function () {
             result.toLaTeX(4).should.equal('f(x) = 1.580e^{0.3912x}');
         });
 
-        it('Polynomial regression', function () {
-            var x = [-3, 0, 2, 4];
-            var y = [3, 1, 1, 3];
-            var result = new NLR.PolynomialRegression(x, y, 2, {computeQuality: true});
-            var expected = [0.850519, -0.192495, 0.178462];
-
-            for (var i = 0; i < expected.length; ++i) {
-                result.coefficients[i].should.be.approximately(expected[i], 10e-6);
-                result.powers[i].should.equal(i);
-            }
-            result.quality.r2.should.greaterThan(0.8);
-            result.quality.chi2.should.lessThan(0.1);
-            result.quality.rmsd.should.lessThan(0.01);
-            result.toString(4).should.equal('f(x) = 0.1785 * x^2 - 0.1925 * x + 0.8505');
-            result.toLaTeX(4).should.equal('f(x) = 0.1785x^{2} - 0.1925x + 0.8505');
-        });
-
         it('Power regression', function () {
             var x = [17.6, 26, 31.9, 38.9, 45.8, 51.2, 58.1, 64.7, 66.7, 80.8, 82.9];
             var y = [159.9, 206.9, 236.8, 269.9, 300.6, 323.6, 351.7, 377.6, 384.1, 437.2, 444.7];
@@ -119,30 +102,6 @@ describe('Non-linear regression', function () {
             model.name.should.equal('expRegression');
             model.A.should.equal(-1);
             model.C.should.equal(1);
-        });
-
-        it('Polynomial regression', function () {
-            var regression = NLR.PolynomialRegression.load({
-                name: 'polynomialRegression',
-                coefficients: -1,
-                powers: 1,
-                M: 1,
-                quality: {
-                    r: 1,
-                    r2: 1,
-                    chi2: 145.8,
-                    rmsd: 0
-                }
-            });
-            regression.coefficients.should.equal(-1);
-            regression.powers.should.equal(1);
-            regression.M.should.equal(1);
-
-            var model = regression.toJSON();
-            model.name.should.equal('polynomialRegression');
-            model.coefficients.should.equal(-1);
-            model.powers.should.equal(1);
-            model.M.should.equal(1);
         });
 
         it('Power regression', function () {
