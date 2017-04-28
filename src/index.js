@@ -2,10 +2,10 @@
 
 exports.SimpleLinearRegression = exports.SLR = require('ml-regression-simple-linear');
 exports.PolynomialRegression = require('ml-regression-polynomial');
+exports.ExponentialRegression = require('ml-regression-exponential');
 
 exports.NonLinearRegression = exports.NLR = {
     PotentialRegression: require('./regression/potential-regression'),
-    ExpRegression: require('./regression/exp-regression'),
     PowerRegression: require('./regression/power-regression')
 };
 exports.KernelRidgeRegression = exports.KRR = require('./regression/kernel-ridge-regression');

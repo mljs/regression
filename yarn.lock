@@ -820,6 +820,13 @@ ml-regression-base@^1.0.0, ml-regression-base@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/ml-regression-base/-/ml-regression-base-1.1.1.tgz#f045915df1b7642b3435ec6d2323e14741019c9c"
 
+ml-regression-exponential@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/ml-regression-exponential/-/ml-regression-exponential-1.0.0.tgz#a23e0c715ab3c80d489c21863a5bc2b4b7b6b335"
+  dependencies:
+    ml-regression-base "^1.1.1"
+    ml-regression-simple-linear "^1.0.1"
+
 ml-regression-polynomial@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/ml-regression-polynomial/-/ml-regression-polynomial-1.0.0.tgz#a8b43b79a3e8da2fe4fb6777f317837bc72a58c1"
@@ -827,7 +834,7 @@ ml-regression-polynomial@^1.0.0:
     ml-matrix "^3.0.0"
     ml-regression-base "^1.1.1"
 
-ml-regression-simple-linear@^1.0.0:
+ml-regression-simple-linear@^1.0.0, ml-regression-simple-linear@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/ml-regression-simple-linear/-/ml-regression-simple-linear-1.0.1.tgz#fb08f65792481a09b0be8b08524f37c991a99b4a"
   dependencies:

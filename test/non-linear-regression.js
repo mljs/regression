@@ -19,19 +19,6 @@ describe('Non-linear regression', function () {
             result.toLaTeX(4).should.equal('f(x) = 4.907x^{2}');
         });
 
-        it('Exponential regresion', function () {
-            var x = [0, 1, 2, 3, 4];
-            var y = [1.5, 2.5, 3.5, 5.0, 7.5];
-            var result = new NLR.ExpRegression(x, y, {computeQuality: true});
-            result.A.should.be.approximately(0.3912023, 10e-7);
-            result.C.should.be.approximately(1.579910, 10e-7);
-            result.quality.r2.should.greaterThan(0.8);
-            result.quality.chi2.should.lessThan(0.1);
-            result.quality.rmsd.should.lessThan(0.01);
-            result.toString(4).should.equal('f(x) = 1.580 * exp(0.3912 * x)');
-            result.toLaTeX(4).should.equal('f(x) = 1.580e^{0.3912x}');
-        });
-
         it('Power regression', function () {
             var x = [17.6, 26, 31.9, 38.9, 45.8, 51.2, 58.1, 64.7, 66.7, 80.8, 82.9];
             var y = [159.9, 206.9, 236.8, 269.9, 300.6, 323.6, 351.7, 377.6, 384.1, 437.2, 444.7];
@@ -80,28 +67,6 @@ describe('Non-linear regression', function () {
             model.name.should.equal('potentialRegression');
             model.A.should.equal(1);
             model.M.should.equal(-1);
-        });
-
-        it('Exponential regresion', function () {
-            var regression = NLR.ExpRegression.load({
-                name: 'expRegression',
-                A: -1,
-                C: 1,
-                quality: {
-                    r: 1,
-                    r2: 1,
-                    chi2: 145.8,
-                    rmsd: 0
-                }
-            });
-            regression.A.should.equal(-1);
-            regression.C.should.equal(1);
-            regression.toLaTeX().should.equal('f(x) = \\frac{1}{e^{1x}}');
-
-            var model = regression.toJSON();
-            model.name.should.equal('expRegression');
-            model.A.should.equal(-1);
-            model.C.should.equal(1);
         });
 
         it('Power regression', function () {
