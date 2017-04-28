@@ -48,6 +48,7 @@
     "ml-matrix": "^3.0.0",
     "ml-regression-exponential": "^1.0.0",
     "ml-regression-polynomial": "^1.0.0",
+    "ml-regression-power": "^1.0.0",
     "ml-regression-simple-linear": "^1.0.0",
     "ml-stat": "^1.3.3"
   }

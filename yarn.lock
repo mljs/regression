@@ -816,7 +816,7 @@ ml-matrix@^3.0.0:
   dependencies:
     ml-array-utils "^0.3.0"
 
-ml-regression-base@^1.0.0, ml-regression-base@^1.1.1:
+ml-regression-base@^1.0.0, ml-regression-base@^1.1.1, ml-regression-base@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/ml-regression-base/-/ml-regression-base-1.2.0.tgz#e8c58c12b649d845ecb13e0c246ad1be6e57cc1c"
 
@@ -834,7 +834,14 @@ ml-regression-polynomial@^1.0.0:
     ml-matrix "^3.0.0"
     ml-regression-base "^1.1.1"
 
-ml-regression-simple-linear@^1.0.0, ml-regression-simple-linear@^1.0.1:
+ml-regression-power@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/ml-regression-power/-/ml-regression-power-1.0.0.tgz#eb934fc3c0531a15d8772f46a7ca9551785e481f"
+  dependencies:
+    ml-regression-base "^1.2.0"
+    ml-regression-simple-linear "^1.0.2"
+
+ml-regression-simple-linear@^1.0.0, ml-regression-simple-linear@^1.0.1, ml-regression-simple-linear@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/ml-regression-simple-linear/-/ml-regression-simple-linear-1.0.2.tgz#d99fe95be9178c3bf045cc58490b1e62851336af"
   dependencies:
