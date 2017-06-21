@@ -50,6 +50,7 @@
     "ml-regression-polynomial": "^1.0.0",
     "ml-regression-power": "^1.0.0",
     "ml-regression-simple-linear": "^1.0.0",
+    "ml-regression-theil-sen": "^1.0.0",
     "ml-stat": "^1.3.3"
   }
 }
