@@ -3,7 +3,6 @@
   [![NPM version][npm-image]][npm-url]
   [![build status][travis-image]][travis-url]
   [![Test coverage][coveralls-image]][coveralls-url]
-  [![David deps][david-image]][david-url]
   [![npm download][download-image]][download-url]
 
 Regression algorithms
@@ -24,6 +23,11 @@ let outputs = [20, 40, 30, 50, 60];
 let regression = new SLR(inputs, outputs);
 regression.toString(3) === 'f(x) = - 0.265 * x + 50.6';
 ```
+
+#### External links
+
+Check this cool blog post for a detailed example:
+https://hackernoon.com/machine-learning-with-javascript-part-1-9b97f3ed4fe5
 
 ### Polynomial regression
 
@@ -49,7 +53,5 @@ console.log(regression.toLaTeX());
 [travis-url]: https://travis-ci.org/mljs/regression
 [coveralls-image]: https://img.shields.io/coveralls/mljs/regression.svg?style=flat-square
 [coveralls-url]: https://coveralls.io/github/mljs/regression
-[david-image]: https://img.shields.io/david/mljs/regression.svg?style=flat-square
-[david-url]: https://david-dm.org/mljs/regression
 [download-image]: https://img.shields.io/npm/dm/ml-regression.svg?style=flat-square
 [download-url]: https://npmjs.org/package/ml-regression
