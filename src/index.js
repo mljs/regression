@@ -12,4 +12,7 @@ exports.KernelRidgeRegression = exports.KRR = require('./regression/kernel-ridge
 //exports.MultipleLinearRegression = exports.MLR = require('./regression/multiple-linear-regression');
 //exports.MultivariateLinearRegression = exports.MVLR = require('./regression/multivariate-linear-regression');
 exports.PolinomialFitting2D = require('./regression/poly-fit-regression2d');
+
+// robust regressions
 exports.TheilSenRegression = require('ml-regression-theil-sen');
+exports.RobustPolynomialRegression = require('ml-regression-robust-polynomial');

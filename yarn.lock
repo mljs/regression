@@ -841,6 +841,13 @@ ml-regression-power@^1.0.0:
     ml-regression-base "^1.2.0"
     ml-regression-simple-linear "^1.0.2"
 
+ml-regression-robust-polynomial@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/ml-regression-robust-polynomial/-/ml-regression-robust-polynomial-1.0.0.tgz#35566cdda308725da7c23ebbcf6c088be3f4ae05"
+  dependencies:
+    ml-matrix "^3.0.0"
+    ml-regression-base "^1.2.0"
+
 ml-regression-simple-linear@^1.0.0, ml-regression-simple-linear@^1.0.1, ml-regression-simple-linear@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/ml-regression-simple-linear/-/ml-regression-simple-linear-1.0.2.tgz#d99fe95be9178c3bf045cc58490b1e62851336af"
