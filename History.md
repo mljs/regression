@@ -1,3 +1,13 @@
+<a name="4.3.0"></a>
+# [4.3.0](https://github.com/mljs/regression/compare/v4.2.1...v4.3.0) (2017-06-22)
+
+
+### Features
+
+* add RobustPolynomialRegression ([dffb44c](https://github.com/mljs/regression/commit/dffb44c))
+
+
+
 <a name="4.2.1"></a>
 ## [4.2.1](https://github.com/mljs/regression/compare/v4.2.0...v4.2.1) (2017-04-25)
 
