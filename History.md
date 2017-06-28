@@ -1,3 +1,19 @@
+<a name="4.4.0"></a>
+# [4.4.0](https://github.com/mljs/regression/compare/v4.3.0...v4.4.0) (2017-06-28)
+
+
+### Bug Fixes
+
+* do not use '.default' in index ([b8e2934](https://github.com/mljs/regression/commit/b8e2934))
+* export modules as default ([#27](https://github.com/mljs/regression/issues/27)) ([072df5a](https://github.com/mljs/regression/commit/072df5a))
+
+
+### Features
+
+* add MultivariateLinearRegression ([152478f](https://github.com/mljs/regression/commit/152478f))
+
+
+
 <a name="4.3.0"></a>
 # [4.3.0](https://github.com/mljs/regression/compare/v4.2.1...v4.3.0) (2017-06-22)
 
