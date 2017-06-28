@@ -47,6 +47,7 @@
     "ml-kernel": "^2.0.0",
     "ml-matrix": "^3.0.0",
     "ml-regression-exponential": "^1.0.0",
+    "ml-regression-multivariate-linear": "^1.0.0",
     "ml-regression-polynomial": "^1.0.0",
     "ml-regression-power": "^1.0.0",
     "ml-regression-robust-polynomial": "^1.0.0",
