@@ -2,18 +2,18 @@
   "name": "ml-regression",
   "version": "4.4.0",
   "description": "Regression algorithms",
-  "main": "src/index.js",
-  "directories": {
-    "lib": "src",
-    "test": "test"
-  },
+  "main": "lib/index.js",
+  "module": "src/index.js",
+  "files": [
+    "lib",
+    "src"
+  ],
   "scripts": {
-    "eslint": "eslint src test",
+    "eslint": "eslint src",
     "eslint-fix": "npm run eslint -- --fix",
-    "test": "npm run test-mocha",
-    "test-mocha": "mocha --require should --reporter mocha-better-spec-reporter --recursive",
-    "test-cov": "istanbul cover node_modules/.bin/_mocha -- --require should --reporter dot --recursive",
-    "test-travis": "istanbul cover node_modules/.bin/_mocha --report lcovonly -- --require should --reporter dot --recursive"
+    "prepublish": "rollup -c",
+    "test": "run-s testonly eslint",
+    "testonly": "jest"
   },
   "repository": {
     "type": "git",
@@ -33,19 +33,23 @@
     "url": "https://github.com/mljs/regression/issues"
   },
   "homepage": "https://github.com/mljs/regression",
+  "jest": {
+    "testEnvironment": "node"
+  },
   "devDependencies": {
-    "eslint": "^3.4.0",
-    "eslint-config-cheminfo": "^1.2.0",
-    "eslint-plugin-no-only-tests": "^1.1.0",
-    "istanbul": "^0.4.4",
-    "mocha": "^3.0.2",
-    "mocha-better-spec-reporter": "^3.0.2",
-    "should": "^11.1.0"
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.24.1",
+    "eslint": "^4.1.1",
+    "eslint-config-cheminfo": "^1.7.0",
+    "eslint-plugin-no-only-tests": "^2.0.0",
+    "jest": "^20.0.4",
+    "npm-run-all": "^4.0.2",
+    "rollup": "^0.43.0"
   },
   "dependencies": {
     "is-integer": "^1.0.6",
     "ml-kernel": "^2.0.0",
     "ml-matrix": "^3.0.0",
+    "ml-regression-base": "^1.2.0",
     "ml-regression-exponential": "^1.0.0",
     "ml-regression-multivariate-linear": "^1.0.0",
     "ml-regression-polynomial": "^1.0.0",

@@ -1,4 +1,6 @@
-'use strict';
+import {maybeToPrecision} from 'ml-regression-base';
+import PolynomialRegression from 'ml-regression-polynomial';
+import BaseRegression from 'ml-regression-base';
 
 /*
  * Function that calculate the potential fit in the form f(x) = A*x^M
@@ -6,33 +8,21 @@
  *
  * @param {Vector} X - Vector of the x positions of the points.
  * @param {Vector} Y - Vector of the x positions of the points.
- * @param {Number, BigNumber} M - The exponent of the potential fit.
- * @return {Number|BigNumber} A - The A coefficient of the potential fit.
- * Created by acastillo on 5/12/16.
+ * @param {Number} M - The exponent of the potential fit.
+ * @return {Number} A - The A coefficient of the potential fit.
  */
-
-const maybeToPrecision = require('./util').maybeToPrecision;
-const PolynomialRegression = require('ml-regression-polynomial');
-// const PowerRegression = require('./power-regression');
-const BaseRegression = require('./base-regression');
-
-class PotentialRegression extends BaseRegression {
+export default class PotentialRegression extends BaseRegression {
     /**
      * @constructor
      * @param x: Independent variable
      * @param y: Dependent variable
      * @param M
-     * @param options
      */
-    constructor(x, y, M, options) {
+    constructor(x, y, M) {
         super();
-        let opt = options || {};
         if (x === true) { // reloading model
             this.A = y.A;
             this.M = y.M;
-            if (y.quality) {
-                this.quality = y.quality;
-            }
         } else {
             var n = x.length;
             if (n !== y.length) {
@@ -42,9 +32,6 @@ class PotentialRegression extends BaseRegression {
             var linear = new PolynomialRegression(x, y, [M]);
             this.A = linear.coefficients[0];
             this.M = M;
-            if (opt.computeQuality) {
-                this.quality = this.modelQuality(x, y);
-            }
         }
     }
 
@@ -53,11 +40,11 @@ class PotentialRegression extends BaseRegression {
     }
 
     toJSON() {
-        var out = {name: 'potentialRegression', A: this.A, M: this.M};
-        if (this.quality) {
-            out.quality = this.quality;
-        }
-        return out;
+        return {
+            name: 'potentialRegression',
+            A: this.A,
+            M: this.M
+        };
     }
 
     toString(precision) {
@@ -65,7 +52,6 @@ class PotentialRegression extends BaseRegression {
     }
 
     toLaTeX(precision) {
-
         if (this.M >= 0) {
             return 'f(x) = ' + maybeToPrecision(this.A, precision) + 'x^{' + this.M + '}';
         } else {
@@ -80,5 +66,3 @@ class PotentialRegression extends BaseRegression {
         return new PotentialRegression(true, json);
     }
 }
-
-module.exports = PotentialRegression;

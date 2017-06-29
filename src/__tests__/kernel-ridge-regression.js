@@ -1,7 +1,6 @@
-'use strict';
 
-var Matrix = require('ml-matrix').Matrix;
-var KernelRidgeRegression = require('..').KernelRidgeRegression;
+import {Matrix} from 'ml-matrix';
+import {KernelRidgeRegression} from '..';
 
 var nSamples = 10;
 var nVars = 2;
@@ -16,7 +15,7 @@ for (var i = 0; i < nSamples; i++) {
 describe('Kernel ridge regression', function () {
     it('constant outputs', function () {
         var model = new KernelRidgeRegression([[0, 0], [1, 1]], [[0], [0]]);
-        Array.from(model.predict([[1, 1], [2, 5], [4, 7]])).should.eql([[0], [0], [0]]);
+        expect(Array.from(model.predict([[1, 1], [2, 5], [4, 7]]))).toEqual([[0], [0], [0]]);
     });
     it('Polynomial kernel should overfit the pattern', function () {
         var model = new KernelRidgeRegression(Xs, Ys, {
@@ -27,7 +26,7 @@ describe('Kernel ridge regression', function () {
         var Y = model.predict(Xs);
 
         for (i = 0; i < Y.length; i++) {
-            Y[i][0].should.be.approximately(Ys[i][0], 5e-3);
+            expect(Y[i][0]).toBeCloseTo(Ys[i][0], 5e-3);
         }
     });
     it('Gaussian kernel should overfit the pattern', function () {
@@ -39,7 +38,7 @@ describe('Kernel ridge regression', function () {
         });
         var Y = model.predict(Xs);
         for (var i = 0; i < Y.length; i++) {
-            Y[i][0].should.be.approximately(Ys[i][0], 5e-3);
+            expect(Y[i][0]).toBeCloseTo(Ys[i][0], 5e-3);
         }
     });
     it('Load and export model', function () {
@@ -48,20 +47,14 @@ describe('Kernel ridge regression', function () {
             alpha: 1,
             inputs: 1,
             kernelType: 'gaussian',
-            kernelOptions: {},
-            quality: {
-                r: 1,
-                r2: 1,
-                chi2: 145.8,
-                rmsd: 0
-            }
+            kernelOptions: {}
         });
-        regression.alpha.should.equal(1);
-        regression.kernelType.should.equal('gaussian');
+        expect(regression.alpha).toBe(1);
+        expect(regression.kernelType).toBe('gaussian');
 
         var model = regression.toJSON();
-        model.name.should.equal('kernelRidgeRegression');
-        model.alpha.should.equal(1);
-        model.kernelType.should.equal('gaussian');
+        expect(model.name).toBe('kernelRidgeRegression');
+        expect(model.alpha).toBe(1);
+        expect(model.kernelType).toBe('gaussian');
     });
 });

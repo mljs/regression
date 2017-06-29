@@ -1,11 +1,7 @@
-'use strict';
+import {Matrix, solve} from 'ml-matrix';
+import Kernel from 'ml-kernel';
 
-const matrixLib = require('ml-matrix');
-const Matrix = matrixLib.Matrix;
-const solve = matrixLib.solve;
-const Kernel = require('ml-kernel');
-
-const BaseRegression = require('./base-regression');
+import BaseRegression from 'ml-regression-base';
 
 const defaultOptions = {
     lambda: 0.1,
@@ -16,7 +12,7 @@ const defaultOptions = {
 
 // Implements the Kernel ridge regression algorithm.
 // http://www.ics.uci.edu/~welling/classnotes/papers_class/Kernel-Ridge.pdf
-class KernelRidgeRegression extends BaseRegression {
+export default class KernelRidgeRegression extends BaseRegression {
     constructor(inputs, outputs, options) {
         super();
         if (inputs === true) { // reloading model
@@ -25,10 +21,6 @@ class KernelRidgeRegression extends BaseRegression {
             this.kernelType = outputs.kernelType;
             this.kernelOptions = outputs.kernelOptions;
             this.kernel = new Kernel(outputs.kernelType, outputs.kernelOptions);
-
-            if (outputs.quality) {
-                this.quality = outputs.quality;
-            }
         } else {
             options = Object.assign({}, defaultOptions, options);
 
@@ -42,10 +34,6 @@ class KernelRidgeRegression extends BaseRegression {
             this.kernelType = options.kernelType;
             this.kernelOptions = options.kernelOptions;
             this.kernel = kernelFunction;
-
-            if (options.computeQuality) {
-                this.quality = this.modelQuality(inputs, outputs);
-            }
         }
     }
 
@@ -54,17 +42,13 @@ class KernelRidgeRegression extends BaseRegression {
     }
 
     toJSON() {
-        var out = {
+        return {
             name: 'kernelRidgeRegression',
             alpha: this.alpha,
             inputs: this.inputs,
             kernelType: this.kernelType,
             kernelOptions: this.kernelOptions
         };
-        if (this.quality) {
-            out.quality = this.quality;
-        }
-        return out;
     }
 
     static load(json) {
@@ -74,5 +58,3 @@ class KernelRidgeRegression extends BaseRegression {
         return new KernelRidgeRegression(true, json);
     }
 }
-
-module.exports = KernelRidgeRegression;

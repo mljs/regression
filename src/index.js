@@ -1,18 +1,18 @@
-'use strict';
+export {default as SimpleLinearRegression, default as SLR} from 'ml-regression-simple-linear';
+export {default as PolynomialRegression} from 'ml-regression-polynomial';
+export {default as ExponentialRegression} from 'ml-regression-exponential';
+export {default as PowerRegression} from 'ml-regression-power';
+export {default as MultivariateLinearRegression} from 'ml-regression-multivariate-linear';
 
-exports.SimpleLinearRegression = exports.SLR = require('ml-regression-simple-linear');
-exports.PolynomialRegression = require('ml-regression-polynomial');
-exports.ExponentialRegression = require('ml-regression-exponential');
-exports.PowerRegression = require('ml-regression-power');
-exports.MultivariateLinearRegression = require('ml-regression-multivariate-linear');
-
-exports.NonLinearRegression = exports.NLR = {
-    PotentialRegression: require('./regression/potential-regression')
+import PotentialRegression from './regression/potential-regression';
+const NLR = {
+    PotentialRegression
 };
-exports.KernelRidgeRegression = exports.KRR = require('./regression/kernel-ridge-regression');
-//exports.MultipleLinearRegression = exports.MLR = require('./regression/multiple-linear-regression');
-exports.PolinomialFitting2D = require('./regression/poly-fit-regression2d');
+export {NLR, NLR as NonLinearRegression};
+
+export {default as KernelRidgeRegression, default as KRR} from './regression/kernel-ridge-regression';
+export {default as PolinomialFitting2D} from './regression/poly-fit-regression2d';
 
 // robust regressions
-exports.TheilSenRegression = require('ml-regression-theil-sen');
-exports.RobustPolynomialRegression = require('ml-regression-robust-polynomial');
+export {default as TheilSenRegression} from 'ml-regression-theil-sen';
+export {default as RobustPolynomialRegression} from 'ml-regression-robust-polynomial';

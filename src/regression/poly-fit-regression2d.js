@@ -1,16 +1,12 @@
-'use strict';
-
-const matrixLib = require('ml-matrix');
-const Matrix = matrixLib.Matrix;
-const SVD = matrixLib.SVD;
-const BaseRegression = require('./base-regression');
+import {Matrix, SVD} from 'ml-matrix';
+import BaseRegression from 'ml-regression-base';
 
 const defaultOptions = {
     order: 2
 };
 // Implements the Kernel ridge regression algorithm.
 // http://www.ics.uci.edu/~welling/classnotes/papers_class/Kernel-Ridge.pdf
-class PolynomialFitRegression2D extends BaseRegression {
+export default class PolynomialFitRegression2D extends BaseRegression {
     /**
      * Constructor for the 2D polynomial fitting
      *
@@ -39,10 +35,6 @@ class PolynomialFitRegression2D extends BaseRegression {
             this.y = outputs;
 
             this.train(this.X, this.y, options);
-
-            if (options.computeQuality) {
-                this.quality = this.modelQuality(inputs, outputs);
-            }
         }
     }
 
@@ -58,7 +50,6 @@ class PolynomialFitRegression2D extends BaseRegression {
         if (!Matrix.isMatrix(X)) X = new Matrix(X);
         if (!Matrix.isMatrix(y)) y = Matrix.columnVector(y);
 
-        //Perhaps y is transpose
         if (y.rows !== X.rows) {
             y = y.transpose();
         }
@@ -150,15 +141,11 @@ class PolynomialFitRegression2D extends BaseRegression {
     }
 
     toJSON() {
-        var out = {
+        return {
             name: 'polyfit2D',
             order: this.order,
             coefficients: this.coefficients
         };
-        if (this.quality) {
-            out.quality = this.quality;
-        }
-        return out;
     }
 
     static load(json) {
@@ -167,11 +154,7 @@ class PolynomialFitRegression2D extends BaseRegression {
         }
         return new PolynomialFitRegression2D(true, json);
     }
-
 }
-
-module.exports = PolynomialFitRegression2D;
-
 
 /**
  * Function that given a column vector return this: vector^power
