@@ -1,3 +1,8 @@
+<a name="4.4.1"></a>
+## [4.4.1](https://github.com/mljs/regression/compare/v4.4.0...v4.4.1) (2017-06-29)
+
+
+
 <a name="4.4.0"></a>
 # [4.4.0](https://github.com/mljs/regression/compare/v4.3.0...v4.4.0) (2017-06-28)
 
