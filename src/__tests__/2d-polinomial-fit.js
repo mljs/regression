@@ -9,20 +9,18 @@ describe('2D polinomial fit', () => {
   }
 
   const pf = new Polyfit(X, y, {
-    order: 2
+    order: 2,
   });
 
   it('Training coefficients', () => {
     const estimatedCoefficients = [
-      1.5587e1,
-      3.8873e-1,
-      5.2582e-3,
-      4.8498e-1,
-      2.1127e-3,
-      -7.3709e-3
+      1.5587e1, 3.8873e-1, 5.2582e-3, 4.8498e-1, 2.1127e-3, -7.3709e-3,
     ];
     for (let i = 0; i < estimatedCoefficients.length; ++i) {
-      expect(pf.coefficients.get(i, 0)).toBeCloseTo(estimatedCoefficients[i], 1e-2);
+      expect(pf.coefficients.get(i, 0)).toBeCloseTo(
+        estimatedCoefficients[i],
+        1e-2,
+      );
     }
   });
 
@@ -44,16 +42,8 @@ describe('2D polinomial fit', () => {
 
   it('Other function test', () => {
     var testValues = [
-      15.041667,
-      9.375,
-      5.041667,
-      2.041667,
-      0.375,
-      0.041667,
-      1.041667,
-      3.375,
-      7.041667,
-      12.041667
+      15.041667, 9.375, 5.041667, 2.041667, 0.375, 0.041667, 1.041667, 3.375,
+      7.041667, 12.041667,
     ];
 
     var len = 21;
@@ -67,7 +57,7 @@ describe('2D polinomial fit', () => {
     }
 
     var polyFit = new Polyfit(X, y, {
-      order: 2
+      order: 2,
     });
 
     var test = 10;
@@ -84,5 +74,20 @@ describe('2D polinomial fit', () => {
     for (i = 0; i < testValues.length; ++i) {
       expect(predict[i]).toBeCloseTo(testValues[i], 1e-2);
     }
+  });
+  it('must throw error', () => {
+    const X = new Array(5);
+    const y = new Array(5);
+    for (let i = 0; i < 5; ++i) {
+      X[i] = [i, i + 10];
+      y[i] = i + 20;
+    }
+
+    expect(() => {
+      const polyfit = new Polyfit(X, y, {
+        order: 4,
+      });
+      return polyfit;
+    }).toThrow('Insufficient number of points to create regression model.');
   });
 });
