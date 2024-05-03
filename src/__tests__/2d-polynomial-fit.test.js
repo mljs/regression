@@ -75,4 +75,19 @@ describe("2D polinomial fit", () => {
       expect(predict[i]).toBeCloseTo(testValues[i], 1e-2);
     }
   });
+  it("must throw error", () => {
+    const X = new Array(5);
+    const y = new Array(5);
+    for (let i = 0; i < 5; ++i) {
+      X[i] = [i, i + 10];
+      y[i] = i + 20;
+    }
+
+    expect(() => {
+      const polyfit = new Polyfit(X, y, {
+        order: 4,
+      });
+      return polyfit;
+    }).toThrow("Insufficient number of points to create regression model.");
+  });
 });

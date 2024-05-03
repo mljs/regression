@@ -66,6 +66,11 @@ export default class PolynomialFitRegression2D extends BaseRegression {
 
     let examples = X.rows;
     let coefficients = ((this.order + 2) * (this.order + 1)) / 2;
+    if (examples < coefficients) {
+      throw new Error(
+        "Insufficient number of points to create regression model.",
+      );
+    }
     this.coefficients = new Array(coefficients);
 
     let x1 = X.getColumnVector(0);
