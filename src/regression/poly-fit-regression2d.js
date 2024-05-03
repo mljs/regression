@@ -2,7 +2,7 @@ import { Matrix, SVD } from 'ml-matrix';
 import BaseRegression from 'ml-regression-base';
 
 const defaultOptions = {
-  order: 2
+  order: 2,
 };
 // Implements the Kernel ridge regression algorithm.
 // http://www.ics.uci.edu/~welling/classnotes/papers_class/Kernel-Ridge.pdf
@@ -57,7 +57,7 @@ export default class PolynomialFitRegression2D extends BaseRegression {
 
     if (X.columns !== 2) {
       throw new RangeError(
-        `You give X with ${X.columns} columns and it must be 2`
+        `You give X with ${X.columns} columns and it must be 2`,
       );
     }
     if (X.rows !== y.rows) {
@@ -66,29 +66,19 @@ export default class PolynomialFitRegression2D extends BaseRegression {
 
     var examples = X.rows;
     var coefficients = ((this.order + 2) * (this.order + 1)) / 2;
+    if (examples < coefficients) {
+      throw new Error(
+        'Insufficient number of points to create regression model.',
+      );
+    }
     this.coefficients = new Array(coefficients);
 
     var x1 = X.getColumnVector(0);
     var x2 = X.getColumnVector(1);
 
-    var scaleX1 =
-      1.0 /
-      x1
-        .clone()
-        .abs()
-        .max();
-    var scaleX2 =
-      1.0 /
-      x2
-        .clone()
-        .abs()
-        .max();
-    var scaleY =
-      1.0 /
-      y
-        .clone()
-        .abs()
-        .max();
+    var scaleX1 = 1.0 / x1.clone().abs().max();
+    var scaleX2 = 1.0 / x2.clone().abs().max();
+    var scaleY = 1.0 / y.clone().abs().max();
 
     x1.mulColumn(0, scaleX1);
     x2.mulColumn(0, scaleX2);
@@ -109,7 +99,7 @@ export default class PolynomialFitRegression2D extends BaseRegression {
     var svd = new SVD(A.transpose(), {
       computeLeftSingularVectors: true,
       computeRightSingularVectors: true,
-      autoTranspose: false
+      autoTranspose: false,
     });
 
     var qqs = Matrix.rowVector(svd.diagonal);
@@ -128,9 +118,7 @@ export default class PolynomialFitRegression2D extends BaseRegression {
     var U = svd.rightSingularVectors;
     var V = svd.leftSingularVectors;
 
-    this.coefficients = V.mmul(qqs.transpose())
-      .mmul(U.transpose())
-      .mmul(y);
+    this.coefficients = V.mmul(qqs.transpose()).mmul(U.transpose()).mmul(y);
 
     col = 0;
 
@@ -143,7 +131,7 @@ export default class PolynomialFitRegression2D extends BaseRegression {
           (this.coefficients.get(col, 0) *
             Math.pow(scaleX1, i) *
             Math.pow(scaleX2, j)) /
-            scaleY
+            scaleY,
         );
         col++;
       }
@@ -172,7 +160,7 @@ export default class PolynomialFitRegression2D extends BaseRegression {
     return {
       name: 'polyfit2D',
       order: this.order,
-      coefficients: this.coefficients
+      coefficients: this.coefficients,
     };
   }
 
