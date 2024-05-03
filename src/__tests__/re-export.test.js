@@ -1,7 +1,7 @@
-import * as regression from '..';
+import * as regression from "..";
 
-describe('test that re-exports are OK', () => {
-  it('should export functions', () => {
+describe("test that re-exports are OK", () => {
+  it("should export functions", () => {
     expect(regression.SimpleLinearRegression).toBeInstanceOf(Function);
     expect(regression.PolynomialRegression).toBeInstanceOf(Function);
     expect(regression.ExponentialRegression).toBeInstanceOf(Function);

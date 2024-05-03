@@ -1,4 +1,4 @@
-extends: 'eslint-config-cheminfo'
+extends: "eslint-config-cheminfo"
 parserOptions:
   sourceType: module
 env:

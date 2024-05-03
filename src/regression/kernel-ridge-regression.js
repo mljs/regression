@@ -1,12 +1,12 @@
-import { Matrix, solve } from 'ml-matrix';
-import Kernel from 'ml-kernel';
-import BaseRegression from 'ml-regression-base';
+import Kernel from "ml-kernel";
+import { Matrix, solve } from "ml-matrix";
+import BaseRegression from "ml-regression-base";
 
 const defaultOptions = {
   lambda: 0.1,
-  kernelType: 'gaussian',
+  kernelType: "gaussian",
   kernelOptions: {},
-  computeCoefficient: false
+  computeCoefficient: false,
 };
 
 // Implements the Kernel ridge regression algorithm.
@@ -23,11 +23,11 @@ export default class KernelRidgeRegression extends BaseRegression {
       this.kernel = new Kernel(outputs.kernelType, outputs.kernelOptions);
     } else {
       inputs = Matrix.checkMatrix(inputs);
-      options = Object.assign({}, defaultOptions, options);
+      options = { ...defaultOptions, ...options };
 
       const kernelFunction = new Kernel(
         options.kernelType,
-        options.kernelOptions
+        options.kernelOptions,
       );
       const K = kernelFunction.compute(inputs);
       const n = inputs.rows;
@@ -50,17 +50,17 @@ export default class KernelRidgeRegression extends BaseRegression {
 
   toJSON() {
     return {
-      name: 'kernelRidgeRegression',
+      name: "kernelRidgeRegression",
       alpha: this.alpha,
       inputs: this.inputs,
       kernelType: this.kernelType,
-      kernelOptions: this.kernelOptions
+      kernelOptions: this.kernelOptions,
     };
   }
 
   static load(json) {
-    if (json.name !== 'kernelRidgeRegression') {
-      throw new TypeError('not a KRR model');
+    if (json.name !== "kernelRidgeRegression") {
+      throw new TypeError("not a KRR model");
     }
     return new KernelRidgeRegression(true, json);
   }

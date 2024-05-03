@@ -1,6 +1,5 @@
-import BaseRegression, { maybeToPrecision } from 'ml-regression-base';
-import PolynomialRegression from 'ml-regression-polynomial';
-
+import BaseRegression, { maybeToPrecision } from "ml-regression-base";
+import { PolynomialRegression } from "ml-regression-polynomial";
 
 /*
  * Function that calculate the potential fit in the form f(x) = A*x^M
@@ -25,26 +24,26 @@ export default class PotentialRegression extends BaseRegression {
       this.A = y.A;
       this.M = y.M;
     } else {
-      var n = x.length;
+      let n = x.length;
       if (n !== y.length) {
-        throw new RangeError('input and output array have a different length');
+        throw new RangeError("input and output array have a different length");
       }
 
-      var linear = new PolynomialRegression(x, y, [M]);
+      let linear = new PolynomialRegression(x, y, [M]);
       this.A = linear.coefficients[0];
       this.M = M;
     }
   }
 
   _predict(x) {
-    return this.A * Math.pow(x, this.M);
+    return this.A * x ** this.M;
   }
 
   toJSON() {
     return {
-      name: 'potentialRegression',
+      name: "potentialRegression",
       A: this.A,
-      M: this.M
+      M: this.M,
     };
   }
 
@@ -54,23 +53,16 @@ export default class PotentialRegression extends BaseRegression {
 
   toLaTeX(precision) {
     if (this.M >= 0) {
-      return (
-        `f(x) = ${maybeToPrecision(this.A, precision)}x^{${this.M}}`
-      );
+      return `f(x) = ${maybeToPrecision(this.A, precision)}x^{${this.M}}`;
     } else {
-      return (
-        `f(x) = \\frac{${
-          maybeToPrecision(this.A, precision)
-        }}{x^{${
-          -this.M
-        }}}`
-      );
+      return `f(x) = \\frac{${maybeToPrecision(this.A, precision)}}{x^{${-this
+        .M}}}`;
     }
   }
 
   static load(json) {
-    if (json.name !== 'potentialRegression') {
-      throw new TypeError('not a potential regression model');
+    if (json.name !== "potentialRegression") {
+      throw new TypeError("not a potential regression model");
     }
     return new PotentialRegression(true, json);
   }
