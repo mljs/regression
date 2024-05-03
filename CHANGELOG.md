@@ -13,6 +13,17 @@
 
 
 <a name="4.4.2"></a>
+## [6.0.0](https://github.com/mljs/regression/compare/v5.0.1...v6.0.0) (2024-05-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* throw error if insufficient number of points
+
+### Features
+
+* throw error if insufficient number of points ([00eb422](https://github.com/mljs/regression/commit/00eb422f371914643700a0af0efd8ed9c7ef679b))
+
 ## [4.4.2](https://github.com/mljs/regression/compare/v4.4.1...v4.4.2) (2017-07-21)
 
 
