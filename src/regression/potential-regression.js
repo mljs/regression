@@ -1,4 +1,4 @@
-import BaseRegression, { maybeToPrecision } from "ml-regression-base";
+import { BaseRegression, maybeToPrecision } from "ml-regression-base";
 import { PolynomialRegression } from "ml-regression-polynomial";
 
 /*
@@ -10,7 +10,7 @@ import { PolynomialRegression } from "ml-regression-polynomial";
  * @param {Number} M - The exponent of the potential fit.
  * @return {Number} A - The A coefficient of the potential fit.
  */
-export default class PotentialRegression extends BaseRegression {
+export class PotentialRegression extends BaseRegression {
   /**
    * @constructor
    * @param x: Independent variable

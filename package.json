@@ -41,24 +41,25 @@
     "testEnvironment": "node"
   },
   "devDependencies": {
-    "@babel/plugin-transform-modules-commonjs": "^7.24.1",
-    "@types/jest": "^29.5.12",
-    "eslint": "^8.57.0",
-    "eslint-config-cheminfo": "^9.2.0",
+    "@babel/plugin-transform-modules-commonjs": "^7.25.7",
+    "@types/jest": "^29.5.13",
+    "eslint": "^9.12.0",
+    "eslint-config-cheminfo": "^12.0.1",
+    "globals": "^15.11.0",
     "jest": "^29.7.0",
-    "prettier": "^3.2.5",
-    "rollup": "^4.17.2"
+    "prettier": "^3.3.3",
+    "rollup": "^4.24.0"
   },
   "dependencies": {
     "ml-kernel": "^3.0.0",
-    "ml-matrix": "^6.11.0",
-    "ml-regression-base": "^3.0.0",
-    "ml-regression-exponential": "^2.1.0",
+    "ml-matrix": "^6.12.0",
+    "ml-regression-base": "^4.0.0",
+    "ml-regression-exponential": "^3.0.1",
     "ml-regression-multivariate-linear": "^2.0.4",
-    "ml-regression-polynomial": "^3.0.0",
-    "ml-regression-power": "^2.0.0",
+    "ml-regression-polynomial": "^3.0.1",
+    "ml-regression-power": "^3.0.0",
     "ml-regression-robust-polynomial": "^3.0.0",
-    "ml-regression-simple-linear": "^3.0.0",
-    "ml-regression-theil-sen": "^2.0.0"
+    "ml-regression-simple-linear": "^3.0.1",
+    "ml-regression-theil-sen": "^3.0.0"
   }
 }

@@ -1,12 +1,12 @@
 import { Matrix, SVD } from "ml-matrix";
-import BaseRegression from "ml-regression-base";
+import { BaseRegression } from "ml-regression-base";
 
 const defaultOptions = {
   order: 2,
 };
 // Implements the Kernel ridge regression algorithm.
 // http://www.ics.uci.edu/~welling/classnotes/papers_class/Kernel-Ridge.pdf
-export default class PolynomialFitRegression2D extends BaseRegression {
+export class PolynomialFitRegression2D extends BaseRegression {
   /**
    * Constructor for the 2D polynomial fitting
    *

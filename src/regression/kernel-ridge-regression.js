@@ -1,6 +1,6 @@
 import Kernel from "ml-kernel";
 import { Matrix, solve } from "ml-matrix";
-import BaseRegression from "ml-regression-base";
+import { BaseRegression } from "ml-regression-base";
 
 const defaultOptions = {
   lambda: 0.1,
@@ -11,7 +11,7 @@ const defaultOptions = {
 
 // Implements the Kernel ridge regression algorithm.
 // http://www.ics.uci.edu/~welling/classnotes/papers_class/Kernel-Ridge.pdf
-export default class KernelRidgeRegression extends BaseRegression {
+export class KernelRidgeRegression extends BaseRegression {
   constructor(inputs, outputs, options) {
     super();
     if (inputs === true) {
