@@ -13,6 +13,18 @@
 
 
 <a name="4.4.2"></a>
+## [6.1.0](https://github.com/mljs/regression/compare/v6.0.0...v6.1.0) (2024-05-03)
+
+
+### Features
+
+* throw if polynomial regression 2d can not be done because not enough points ([5784863](https://github.com/mljs/regression/commit/57848639c5f608dbe91868953209cf0578400a3d))
+
+
+### Bug Fixes
+
+* add CI ([a915de0](https://github.com/mljs/regression/commit/a915de020998faa5c9dfb54c47802e3fb9a3de93))
+
 ## [6.0.0](https://github.com/mljs/regression/compare/v5.0.1...v6.0.0) (2024-05-03)
 
 
