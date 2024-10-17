@@ -13,6 +13,18 @@
 
 
 <a name="4.4.2"></a>
+## [6.2.0](https://github.com/mljs/regression/compare/v6.1.0...v6.2.0) (2024-10-17)
+
+
+### Features
+
+* update dependencies ([a498858](https://github.com/mljs/regression/commit/a498858f68b0f900fdfec1de666838f45bdc0be8))
+
+
+### Bug Fixes
+
+* update robust-polynomial to avoid multiple import of regression-base ([6a8853d](https://github.com/mljs/regression/commit/6a8853df1fe621ee1f476aeff02d1d487bc12d89))
+
 ## [6.1.0](https://github.com/mljs/regression/compare/v6.0.0...v6.1.0) (2024-05-03)
 
 
