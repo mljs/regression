@@ -58,7 +58,7 @@
     "ml-regression-multivariate-linear": "^2.0.4",
     "ml-regression-polynomial": "^3.0.1",
     "ml-regression-power": "^3.0.0",
-    "ml-regression-robust-polynomial": "^3.0.0",
+    "ml-regression-robust-polynomial": "^3.0.2",
     "ml-regression-simple-linear": "^3.0.1",
     "ml-regression-theil-sen": "^3.0.0"
   }
