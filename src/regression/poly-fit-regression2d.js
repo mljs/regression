@@ -9,11 +9,9 @@ const defaultOptions = {
 export class PolynomialFitRegression2D extends BaseRegression {
   /**
    * Constructor for the 2D polynomial fitting
-   *
    * @param inputs
    * @param outputs
    * @param options
-   * @constructor
    */
   constructor(inputs, outputs, options = {}) {
     super();
@@ -42,8 +40,7 @@ export class PolynomialFitRegression2D extends BaseRegression {
   /**
    * Function that fits the model given the data(X) and predictions(y).
    * The third argument is an object with the following options:
-   * * order: order of the polynomial to fit.
-   *
+   * order: order of the polynomial to fit.
    * @param {Matrix} X - A matrix with n rows and 2 columns.
    * @param {Matrix} y - A vector of the prediction values.
    */
@@ -76,9 +73,9 @@ export class PolynomialFitRegression2D extends BaseRegression {
     let x1 = X.getColumnVector(0);
     let x2 = X.getColumnVector(1);
 
-    let scaleX1 = 1.0 / x1.clone().abs().max();
-    let scaleX2 = 1.0 / x2.clone().abs().max();
-    let scaleY = 1.0 / y.clone().abs().max();
+    let scaleX1 = 1 / x1.clone().abs().max();
+    let scaleX2 = 1 / x2.clone().abs().max();
+    let scaleY = 1 / y.clone().abs().max();
 
     x1.mulColumn(0, scaleX1);
     x2.mulColumn(0, scaleX2);
@@ -171,10 +168,9 @@ export class PolynomialFitRegression2D extends BaseRegression {
 
 /**
  * Function that given a column vector return this: vector^power
- *
  * @param x - Column vector.
  * @param power - Pow number.
- * @return {Suite|Matrix}
+ * @returns {Suite|Matrix}
  */
 function powColVector(x, power) {
   let result = x.clone();

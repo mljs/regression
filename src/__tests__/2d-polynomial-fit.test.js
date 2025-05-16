@@ -51,7 +51,7 @@ describe("2D polinomial fit", () => {
     let len = 21;
 
     let X = new Array(len);
-    let val = 5.0;
+    let val = 5;
     let y = new Array(len);
     for (let i = 0; i < len; ++i, val += 0.5) {
       X[i] = [val, val];

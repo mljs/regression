@@ -5,7 +5,7 @@ import { NLR } from "..";
 describe("Non-linear regression", () => {
   describe("Should give the correct parameters ", () => {
     it("Potential regression", () => {
-      let x = [0.2, 0.4, 0.6, 0.8, 1.0];
+      let x = [0.2, 0.4, 0.6, 0.8, 1];
       let y = [0.196, 0.785, 1.7665, 3.1405, 4.9075];
       let result = new NLR.PotentialRegression(x, y, 2, {
         computeQuality: true,
@@ -30,7 +30,7 @@ describe("Non-linear regression", () => {
       });
       expect(regression.A).toBe(1);
       expect(regression.M).toBe(-1);
-      expect(regression.toLaTeX()).toBe("f(x) = \\frac{1}{x^{1}}");
+      expect(regression.toLaTeX()).toBe(String.raw`f(x) = \frac{1}{x^{1}}`);
 
       let model = regression.toJSON();
       expect(model.name).toBe("potentialRegression");

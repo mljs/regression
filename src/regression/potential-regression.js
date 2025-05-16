@@ -12,9 +12,9 @@ import { PolynomialRegression } from "ml-regression-polynomial";
  */
 export class PotentialRegression extends BaseRegression {
   /**
-   * @constructor
-   * @param x: Independent variable
-   * @param y: Dependent variable
+   * @class
+   * @param x - Independent variable
+   * @param y - Dependent variable
    * @param M
    */
   constructor(x, y, M) {
