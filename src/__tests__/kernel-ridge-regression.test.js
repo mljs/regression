@@ -1,4 +1,5 @@
 import { Matrix } from "ml-matrix";
+import { describe, it, expect } from "vitest";
 
 import { KernelRidgeRegression } from "..";
 

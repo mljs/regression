@@ -1,3 +1,5 @@
+import { describe, it, expect } from "vitest";
+
 import * as regression from "..";
 
 describe("test that re-exports are OK", () => {

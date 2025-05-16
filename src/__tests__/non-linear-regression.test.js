@@ -1,3 +1,5 @@
+import { describe, it, expect } from "vitest";
+
 import { NLR } from "..";
 
 describe("Non-linear regression", () => {
