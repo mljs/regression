@@ -17,8 +17,7 @@
     "prettier": "prettier --check src",
     "prettier-write": "prettier --write src",
     "test": "npm run test-coverage && npm run eslint && npm run prettier",
-    "test-only": "vitest run",
-    "test-coverage": "vitest run --coverage"
+    "test-only": "vitest run --coverage"
   },
   "repository": {
     "type": "git",
