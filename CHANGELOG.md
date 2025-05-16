@@ -13,6 +13,13 @@
 
 
 <a name="4.4.2"></a>
+## [6.3.0](https://github.com/mljs/regression/compare/v6.2.0...v6.3.0) (2025-05-16)
+
+
+### Features
+
+* add npm on lactame CDN ([61ded60](https://github.com/mljs/regression/commit/61ded606af552c263b2bc553c0401e9ccac7046c))
+
 ## [6.2.0](https://github.com/mljs/regression/compare/v6.1.0...v6.2.0) (2024-10-17)
 
 
